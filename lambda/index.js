@@ -6,8 +6,9 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 exports.handler = async (event) => {
 
     var res_body = {}
+    var req_body = JSON.stringify(event.body);
 
-    if(!event.body.captcha){
+    if(!req_body.captcha){
 
         var captcha_res = await axios.get("https://acoe.annauniv.edu/sems/Login/captcha", {
             responseType: 'arraybuffer'
@@ -17,8 +18,8 @@ exports.handler = async (event) => {
         res_body["captcha"] = Buffer.from(captcha_res.data, 'binary').toString('base64')
 
     } else {
-        var { reg, pass, captcha, cookies } = event.body;
-        
+        var { reg, pass, captcha, cookies } = req_body;
+
         var pass_hash = crypto.createHash('sha512').update(pass).digest('hex');
 
         login_res = await axios({
