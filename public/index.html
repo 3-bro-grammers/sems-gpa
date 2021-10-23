@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEMS GPA PLUGIN</title>
+  <!--
+    
+    <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
+    
+    <script defer src="/__/firebase/7.16.0/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-database.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/7.16.0/firebase-storage.js"></script>
+    
+    <script defer src="/__/firebase/init.js"></script>
+  -->
+
+</head>
+
+<body>
+
+
+  <div id="stud">
+    <img src="https://acoe.annauniv.edu/sems/Login/captcha">
+    <input type="text" id="captcha">
+    <button onclick="login()">LOGIN</button>
+
+  </div>
+  <script>
+
+    fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
+      {
+        method: "post",
+        body: JSON.stringify({captcha:""})
+      }).then(res => res.json()).then(console.log)
+
+    function login() {
+
+      fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
+        {
+          method: "post",
+          body: "username=2018504001&password=08fd602316adeae4becdbf052f025207de6b4e4d39834d4aa7dd2220b2bcf3ad286b5065fcd4b10db666adeecff40e87465d89f0faed5765a866ec00e4a52fd3&captcha_code=112wzv",
+          headers: {
+            "Content-type": "application/x-www-form-urlencoded"
+          }
+        }).then(res => res.text()).then(console.log)
+    }
+  </script>
+</body>
+
+</html>

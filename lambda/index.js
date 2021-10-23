@@ -6,7 +6,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 exports.handler = async (event) => {
 
     var res_body = {}
-    var req_body = JSON.stringify(event.body);
+    var req_body = JSON.parse(event.body);
 
     if(!req_body.captcha){
 
