@@ -23,29 +23,44 @@
 
 
   <div id="stud">
-    <img src="https://acoe.annauniv.edu/sems/Login/captcha">
-    <input type="text" id="captcha">
-    <button onclick="login()">LOGIN</button>
+    <img id="img_captcha">
+    <input type="text" id="captcha_txt">
+    <button onclick="get_res()">RESULT</button><br>
+    <input type="text" id="reg_txt">
+    <input type="text" id="pass_txt">
+    
 
   </div>
+  <pre id="result">
+
+  </pre>
   <script>
+
+    var temp_cookies;
 
     fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
       {
         method: "post",
-        body: JSON.stringify({captcha:""})
-      }).then(res => res.json()).then(console.log)
+        body: JSON.stringify({ captcha: null })
+      }).then(res => res.json()).then((data) => {
+        img_captcha.src = "data:image/jpeg;base64," + data.captcha;
+        temp_cookies = data.cookies[0].substring(0, data.cookies[0].indexOf(";")+1)+ data.cookies[1].substring(0, data.cookies[1].indexOf(";")+1);
+      })
 
-    function login() {
+    function get_res() {
 
       fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
         {
           method: "post",
-          body: "username=2018504001&password=08fd602316adeae4becdbf052f025207de6b4e4d39834d4aa7dd2220b2bcf3ad286b5065fcd4b10db666adeecff40e87465d89f0faed5765a866ec00e4a52fd3&captcha_code=112wzv",
-          headers: {
-            "Content-type": "application/x-www-form-urlencoded"
-          }
-        }).then(res => res.text()).then(console.log)
+          body: JSON.stringify({
+            reg: reg_txt.value,
+            pass: pass_txt.value,
+            captcha: captcha_txt.value,
+            cookies: temp_cookies
+          }),
+        }).then(res => res.json()).then(data=>{
+          result.innerHTML = JSON.stringify(data,null, 4);
+        })
     }
   </script>
 </body>
