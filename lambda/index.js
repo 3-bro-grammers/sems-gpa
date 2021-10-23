@@ -4,11 +4,10 @@ const crypto = require('crypto')
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 exports.handler = async (event) => {
-    var { reg, pass, captcha, cookies } = event.body;
 
     var res_body = {}
 
-    if (!captcha) {
+    if(!event.body.captcha){
 
         var captcha_res = await axios.get("https://acoe.annauniv.edu/sems/Login/captcha", {
             responseType: 'arraybuffer'
@@ -18,6 +17,8 @@ exports.handler = async (event) => {
         res_body["captcha"] = Buffer.from(captcha_res.data, 'binary').toString('base64')
 
     } else {
+        var { reg, pass, captcha, cookies } = event.body;
+        
         var pass_hash = crypto.createHash('sha512').update(pass).digest('hex');
 
         login_res = await axios({
