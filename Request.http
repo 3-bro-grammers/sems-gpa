@@ -1,0 +1,26 @@
+GET https://acoe.annauniv.edu/sems/Login/captcha
+
+###
+
+POST  https://acoe.annauniv.edu/sems/login/student
+Content-Type: application/x-www-form-urlencoded
+
+username=2018504001&password=08fd602316adeae4becdbf052f025207de6b4e4d39834d4aa7dd2220b2bcf3ad286b5065fcd4b10db666adeecff40e87465d89f0faed5765a866ec00e4a52fd3&captcha_code=112wzv
+
+###
+
+POST https://acoe.annauniv.edu/sems/login/logout_all
+
+###
+
+GET https://acoe.annauniv.edu/sems/student/mark
+
+###
+
+POST https://acoe.annauniv.edu/sems/student/get_mark
+Content-Type: application/x-www-form-urlencoded
+
+regno=2018504001&session=XI4CW7ER9evbj5JBsk9QsHF7h4T00%3EDVzfmZ74VaEWMvxo2aQYbjaeN%2BXgDinB9qKxq8dl%3Enx9p%3EEm1NOomBCA%3D%3D
+
+
+
