@@ -50,6 +50,15 @@ exports.handler = async (event) => {
                 })
                 // console.log("LOGOUT others")
             }
+
+            var stud_img_res = await axios.get(`https://acoe.annauniv.edu/sems/student/get_image/${reg}`, {
+                responseType: 'arraybuffer',
+                headers: {
+                    Cookie: cookies
+                }
+            })
+
+
             var mark_res = await axios({
                 method: 'get',
                 url: "https://acoe.annauniv.edu/sems/student/mark",
@@ -57,6 +66,7 @@ exports.handler = async (event) => {
                     Cookie: cookies
                 },
             })
+            // console.log(mark_res.data)
 
             var sp = mark_res.data.split('<option value="')
             // var ses = [];
@@ -103,7 +113,8 @@ exports.handler = async (event) => {
                             name: name,
                             sem: sem,
                             branch: branch,
-                            brcode: brcode
+                            brcode: brcode,
+                            img: Buffer.from(stud_img_res.data, 'binary').toString('base64')
                         }
                     }
 
