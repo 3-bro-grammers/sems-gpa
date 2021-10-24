@@ -8,7 +8,7 @@ exports.handler = async (event) => {
     var res_body = {}
     var req_body = JSON.parse(event.body);
 
-    if(!req_body.captcha){
+    if (!req_body.captcha) {
 
         var captcha_res = await axios.get("https://acoe.annauniv.edu/sems/Login/captcha", {
             responseType: 'arraybuffer'
@@ -33,76 +33,82 @@ exports.handler = async (event) => {
             data: `username=${reg}&password=${pass_hash}&captcha_code=${captcha}`
 
         })
-        // console.log(login_res.data);
+        // console.log("LOGIN res", login_res.data);
+        if (login_res.data.indexOf("Incorrect captcha") > -1)
+            res_body["error"] = "INCORRECT_CAPTCHA";
+        else if (login_res.data.indexOf("Invalid Username or Password") > -1)
+            res_body["error"] = "INVALID_USER_PASS";
+        else {
 
-        if (login_res.data.indexOf("Logout from all other machine") > -1) {
-            await axios({
-                method: 'post',
-                url: "https://acoe.annauniv.edu/sems/login/logout_all",
+            if (login_res.data.indexOf("Logout from all other machine") > -1) {
+                await axios({
+                    method: 'post',
+                    url: "https://acoe.annauniv.edu/sems/login/logout_all",
+                    headers: {
+                        Cookie: cookies
+                    },
+                })
+                // console.log("LOGOUT others")
+            }
+            var mark_res = await axios({
+                method: 'get',
+                url: "https://acoe.annauniv.edu/sems/student/mark",
                 headers: {
                     Cookie: cookies
                 },
             })
-            // console.log("LOGOUT others")
-        }
-        var mark_res = await axios({
-            method: 'get',
-            url: "https://acoe.annauniv.edu/sems/student/mark",
-            headers: {
-                Cookie: cookies
-            },
-        })
 
-        var sp = mark_res.data.split('<option value="')
-        // var ses = [];
-        var ses_c = [];
-        for (i = 1; i < sp.length; i++) {
-            var temp = sp[i].split('">');
-            ses_c.push(temp[0]);
-            // ses.push(temp[1].split('</option')[0]);
-        }
+            var sp = mark_res.data.split('<option value="')
+            // var ses = [];
+            var ses_c = [];
+            for (i = 1; i < sp.length; i++) {
+                var temp = sp[i].split('">');
+                ses_c.push(temp[0]);
+                // ses.push(temp[1].split('</option')[0]);
+            }
 
-        // console.log(ses, ses_c)
+            // console.log("ses_c", ses_c)
 
-        var data_Promises = ses_c.map((e, i) =>
+            var data_Promises = ses_c.map((e, i) =>
 
-            new Promise(async (resolve, reject) => {
-                var sem_data = [];
+                new Promise(async (resolve, reject) => {
+                    var sem_data = [];
 
-                var get_mark_res = await axios({
-                    method: 'post',
-                    url: "https://acoe.annauniv.edu/sems/student/get_mark",
-                    headers: {
-                        Cookie: cookies
-                    },
+                    var get_mark_res = await axios({
+                        method: 'post',
+                        url: "https://acoe.annauniv.edu/sems/student/get_mark",
+                        headers: {
+                            Cookie: cookies
+                        },
 
-                    data: `regno=${reg}&session=${e}`
+                        data: `regno=${reg}&session=${e}`
+                    })
+
+                    // console.log("get_Mark", get_mark_res.data)
+
+                    var sp = get_mark_res.data.msg.split('</td>')
+
+                    for (j = 0; j < sp.length / 12 - 1; j++) {
+                        var sub_data = [];
+                        sub_data.push(sp[j * 12 + 1].split(">")[1]);
+                        sub_data.push(sp[j * 12 + 2].split(">")[1]);
+                        sub_data.push(sp[j * 12 + 11].split(">")[1]);
+                        sem_data.push(sub_data);
+                    }
+
+                    // console.log(i);
+                    resolve(sem_data);
+                    // data.push(sem_data);
+
                 })
+            )
 
-                // console.log(get_mark_res.data)
+            var data = await Promise.all(data_Promises);
 
-                var sp = get_mark_res.data.msg.split('</td>')
+            // console.log(data)
 
-                for (j = 0; j < sp.length / 12 - 1; j++) {
-                    var sub_data = [];
-                    sub_data.push(sp[j * 12 + 1].split(">")[1]);
-                    sub_data.push(sp[j * 12 + 2].split(">")[1]);
-                    sub_data.push(sp[j * 12 + 11].split(">")[1]);
-                    sem_data.push(sub_data);
-                }
-
-                // console.log(i);
-                resolve(sem_data);
-                // data.push(sem_data);
-
-            })
-        )
-
-        var data = await Promise.all(data_Promises);
-
-        // console.log(data)
-
-        res_body["result"] = data;
+            res_body["result"] = data;
+        }
 
     }
 
