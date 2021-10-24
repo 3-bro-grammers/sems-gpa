@@ -91,14 +91,6 @@
     word-break: break-word;
 }
 
-table {
-    margin: 1rem 0;
-}
-
-#gpa_div {
-    text-align: center;
-}
-
 #cgpa_table {
     text-align: center;
 }
@@ -215,10 +207,6 @@ table {
     margin-bottom: 15px;
 }
 
-#gpa_div {
-    text-align: center;
-}
-
 #cgpa_table {
     text-align: center;
 }
@@ -229,6 +217,7 @@ table {
 }
 
 #sem_nav {
+    font-weight: bold;
     flex-wrap: nowrap;
     overflow: auto;
     white-space: nowrap;
@@ -241,16 +230,36 @@ table {
 }
 
 #gpa_div {
+    text-align: center;
     font-size: 1.5rem;
     width: fit-content;
     margin: auto;
     border: 2px solid;
     padding: 5px;
+    background: lightgreen;
 }
 
 #gpa_div b {
     color: red;
 }
+
+#error_div, #slow_div {
+    margin: 10px auto;
+    font-weight: bold;
+    display: none;
+    text-align: center;
+}
+
+#error_div {
+    color: red;
+}
+
+#slow_div {
+    color: blue;
+}
+
+
+
 
 /* .stud_detail_div div, #dept {
     border: 2px solid green;
