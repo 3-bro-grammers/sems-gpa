@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 
 <head>
   <meta charset="utf-8">
@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-
+  <link href="style.css" rel="stylesheet" />
 
   <!--
     
@@ -29,14 +29,21 @@
 </head>
 
 <body>
-
-  <div class="container">
-    <div id="login" class="col-8 col-sm-3">
-      <div class="form-floating mb-3">
+  <nav class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img  class="img-fluid" src="assets/logo.png" alt="semslogo">
+      </a>
+    </div>
+  </nav>
+  <div class="container" id="main-div">
+    <div id="login">
+      <legend id="login-tit" class="mb-3 col-sm|md|lg|xl">Login</legend>
+      <div class="form-floating mb-3 col-sm|md|lg|xl" >
         <input type="text" class="form-control" id="reg_txt" placeholder="Register Number">
         <label for="reg_txt">Register Number</label>
       </div>
-      <div class="form-floating mb-3">
+      <div class="form-floating mb-3 col-sm|md|lg|xl">
         <input type="password" class="form-control" id="pass_txt" placeholder="Password">
         <label for="pass_txt">Password</label>
       </div>
@@ -44,21 +51,20 @@
       <div id="load_captcha_div">
         <span class="spinner-border text-primary" role="status"></span><span>Loading Captcha</span>
       </div>
-      <img class="mb-3" id="img_captcha">
-      <div class="form-floating mb-3">
+      <img class="img-fluid mb-3 col-sm|md|lg|xl" id="img_captcha">
+      <div class="form-floating mb-3 col-sm|md|lg|xl">
         <input type="text" class="form-control" id="captcha_txt" placeholder="Captcha">
         <label for="captcha_txt">Captcha</label>
       </div>
-      <button class="btn btn-primary" onclick="get_res()">
+      <button id="fetch" class="btn btn-primary" onclick="get_res()">
         FETCH
         <span class="spinner-grow spinner-grow-sm" id="fetch_loader" style="display: none;" ></span>
       </button>
     </div>
-
-    <pre id="result">
+  </div>
+  <pre id="result">
 
   </pre>
-  </div>
   <script>
 
     var temp_cookies;
