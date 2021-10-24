@@ -39,4 +39,4 @@ jobs:
           aws_region: us-east-2
           function_name: sems-gpa
           zip_file: ./lambda/bundle.zip
-          timeout: 10 
+          timeout: 60
