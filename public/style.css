@@ -45,7 +45,7 @@
     width: 0;
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 70px;
     left: 0;
     background-color: #222d32;
     overflow-x: hidden;
@@ -61,6 +61,8 @@
     display: block;
     transition: 0.3s;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .sidebar a:hover {

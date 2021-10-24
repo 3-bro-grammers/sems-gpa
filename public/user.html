@@ -56,15 +56,9 @@
   </nav>
   <div id="mySidebar" class="sidebar">
     <span class="closebtn" onclick="closeNav()">×</span>
-    <a href="#" onclick="populate(0)">Sem-1</a>
-    <a href="#" onclick="populate(1)">Sem-2</a>
-    <a href="#" onclick="populate(2)">Sem-3</a>
-    <a href="#" onclick="populate(3)">Sem-4</a>
-    <a href="#" onclick="populate(4)">Sem-5</a>
-    <a href="#" onclick="populate(5)">Sem-6</a>
-    <a href="#" onclick="populate(6)">Sem-7</a>
-    <a href="#" onclick="populate(7)">Sem-8</a>
-    <a href="#" onclick="show_cgpa()">CGPA</a>
+    <div id="sidebar_cont">
+      <!-- <a href="#" onclick="populate(0)">Sem-1</a> -->
+    </div>
   </div>
   <div id="main">
     <div id="banner">
@@ -176,14 +170,23 @@
 
         sem_nav.innerHTML = "";
         var temp = "";
-        for(i = 0; i<gpas.length; i++)
-          temp+=`<a class="nav-link ${i==0?'active':''}" href="#" onclick="populate(${i});" >SEM ${i+1}</a>`
+        for (i = 0; i < gpas.length; i++)
+          temp += `<a class="nav-link ${i == 0 ? 'active' : ''}" href="#" onclick="populate(${i});" >SEM ${i + 1}</a>`
 
-        temp+=`<a class="nav-link" href="#" onclick="show_cgpa()">CGPA</a>`
+        temp += `<a class="nav-link" href="#" onclick="show_cgpa()">CGPA</a>`
 
         sem_nav.innerHTML = temp;
-        
 
+        // fill the side bar
+
+        sidebar_cont.innerHTML = "";
+        var temp = "";
+        for (i = 0; i < gpas.length; i++)
+          temp += `<a href="#" onclick="populate(${i});">Sem-${i+1}</a>`
+
+        temp += `<a href="#" onclick="show_cgpa()";">CGPA</a>`
+
+        sidebar_cont.innerHTML = temp;
 
       })
     }
@@ -222,9 +225,9 @@
       gpa_div.innerHTML = `GPA of Semester-${i + 1} is <b>${cur_gpa}<b>`;
       res_table.style.display = "table";
 
-      document.querySelectorAll("#sem_nav a").forEach((e,j)=>{
+      document.querySelectorAll("#sem_nav a").forEach((e, j) => {
         e.classList.remove("active");
-        if (i==j)
+        if (i == j)
           e.classList.add("active");
 
       })
@@ -250,9 +253,9 @@
       cgpa_table.style.display = "table";
       closeNav();
 
-      document.querySelectorAll("#sem_nav a").forEach((e,j,l)=>{
+      document.querySelectorAll("#sem_nav a").forEach((e, j, l) => {
         e.classList.remove("active");
-        if (j==l.length-1)
+        if (j == l.length - 1)
           e.classList.add("active");
 
       })
