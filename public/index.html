@@ -116,7 +116,7 @@
 
       fetch_loader.style.display = "inline-block";
 
-      setTimeout(()=>{
+      var slow_time_out = setTimeout(()=>{
         slow_div.style.display = "block";
       },8000)
 
@@ -138,6 +138,7 @@
           if(data.error){
             error_div.innerHTML = data.error=="INCORRECT_CAPTCHA"?"Input correct Captcha !":(data.error=="INVALID_USER_PASS"?"Input Correct Reg. num.<br> & Password":"");
             error_div.style.display = "block";
+            clearTimeout(slow_time_out);
             return;
           }
 
