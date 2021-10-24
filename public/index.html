@@ -62,9 +62,6 @@
       </button>
     </div>
   </div>
-  <pre id="result">
-
-  </pre>
   <script>
 
     var temp_cookies;
@@ -96,13 +93,16 @@
             cookies: temp_cookies
           }),
         }).then(res => res.json()).then(data => {
-          result.innerHTML = JSON.stringify(data, null, 4);
+          //result.innerHTML = JSON.stringify(data, null, 4);
           fetch_loader.style.display = "none";
-          console.log(calc_cgpa(data));
+          console.log(data);
+          localStorage.setItem("sems",JSON.stringify(data));
+          location.href="user.html";
+          //console.log(calc_cgpa(data));
         })
     }
 
-    function calc_cgpa(data) {
+    /*function calc_cgpa(data) {
       var brcode = data["stud_details"]["brcode"];
 
       var sem_tot_cred = [];
@@ -143,7 +143,7 @@
       })
 
       return ret;
-    }
+    }*/
   </script>
 </body>
 
