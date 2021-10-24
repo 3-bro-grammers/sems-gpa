@@ -5,6 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SEMS GPA PLUGIN</title>
+
+  <!--Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+
   <!--
     
     <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
@@ -21,19 +30,35 @@
 
 <body>
 
+  <div class="container">
+    <div id="login" class="col-8 col-sm-3">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="reg_txt" placeholder="Register Number">
+        <label for="reg_txt">Register Number</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="pass_txt" placeholder="Password">
+        <label for="pass_txt">Password</label>
+      </div>
 
-  <div id="stud">
-    <img id="img_captcha">
-    <input type="text" id="captcha_txt">
-    <button onclick="get_res()">RESULT</button><br>
-    <input type="text" id="reg_txt">
-    <input type="text" id="pass_txt">
-    
+      <div id="load_captcha_div">
+        <span class="spinner-border text-primary" role="status"></span><span>Loading Captcha</span>
+      </div>
+      <img class="mb-3" id="img_captcha">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="captcha_txt" placeholder="Captcha">
+        <label for="captcha_txt">Captcha</label>
+      </div>
+      <button class="btn btn-primary" onclick="get_res()">FETCH</button>
+    </div>
 
-  </div>
-  <pre id="result">
+
+
+
+    <pre id="result">
 
   </pre>
+  </div>
   <script>
 
     var temp_cookies;
@@ -44,7 +69,8 @@
         body: JSON.stringify({ captcha: null })
       }).then(res => res.json()).then((data) => {
         img_captcha.src = "data:image/jpeg;base64," + data.captcha;
-        temp_cookies = data.cookies[0].substring(0, data.cookies[0].indexOf(";")+1)+ data.cookies[1].substring(0, data.cookies[1].indexOf(";")+1);
+        temp_cookies = data.cookies[0].substring(0, data.cookies[0].indexOf(";") + 1) + data.cookies[1].substring(0, data.cookies[1].indexOf(";") + 1);
+        load_captcha_div.style.display = "none";
       })
 
     function get_res() {
@@ -58,8 +84,8 @@
             captcha: captcha_txt.value,
             cookies: temp_cookies
           }),
-        }).then(res => res.json()).then(data=>{
-          result.innerHTML = JSON.stringify(data,null, 4);
+        }).then(res => res.json()).then(data => {
+          result.innerHTML = JSON.stringify(data, null, 4);
         })
     }
   </script>
