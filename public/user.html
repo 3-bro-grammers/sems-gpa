@@ -29,100 +29,104 @@
 
 </head>
 <script>
-    var data,results,info,gpa,cgpa,gardes;
-     window.onload = () =>{
-      data = JSON.parse(localStorage.getItem("sems"));
-      grades= calc_cgpa(data);
-      gpas=grades["gpa"];
-      results=data["result"];
-      info=data["stud_details"];
-      usr_img.src=`data:image/jpeg;base64,${info["img"]}`;
-        usr_name.innerHTML = `<b>Name:</b> ${info["name"]}`;
-        cur_sem.innerHTML = `<b>Sem:</b> ${info["sem"]}`;
-        dept.innerHTML = `<b>Dept:</b> ${info["branch"]}`;
-        code.innerHTML = `<b>Code:</b> ${info["brcode"]}`;
-        setTimeout(function(){ populate(0); }, 1000);
-     }
+  var data, results, info, gpas, cgpa, grades;
+  window.onload = () => {
+    data = JSON.parse(localStorage.getItem("sems"));
+    calc_cgpa(data);
+    results = data["result"];
+    info = data["stud_details"];
+    usr_img.src = `data:image/jpeg;base64,${info["img"]}`;
+    usr_name.innerHTML = `<b>Name:</b> ${info["name"]}`;
+    cur_sem.innerHTML = `<b>Sem:</b> ${info["sem"]}`;
+    dept.innerHTML = `<b>Dept:</b> ${info["branch"]}`;
+    code.innerHTML = `<b>Code:</b> ${info["brcode"]}`;
+    // setTimeout(function(){ populate(0); }, 1000);
+  }
 </script>
+
 <body>
-    <nav class="navbar">
-        <div class="container sems-tit">
-          <a class="navbar-brand"id="sems-tit" href="#">
-            <button class="openbtn" onclick="openNav()"><i class="fas fa-bars"></i></button>
-            SEMS 
-          </a>
+  <nav class="navbar">
+    <div class="container sems-tit">
+      <span class="navbar-brand" id="sems-tit" href="#">
+        <button class="openbtn" onclick="openNav()"><i class="fas fa-bars"></i></button>
+        SEMS-GPA-PLUGIN
+      </span>
+      <a href="/" style="font-size: 1.5rem; color: crimson;"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </nav>
+  <div id="mySidebar" class="sidebar">
+    <span class="closebtn" onclick="closeNav()">×</span>
+    <a href="#" onclick="populate(0)">Sem-1</a>
+    <a href="#" onclick="populate(1)">Sem-2</a>
+    <a href="#" onclick="populate(2)">Sem-3</a>
+    <a href="#" onclick="populate(3)">Sem-4</a>
+    <a href="#" onclick="populate(4)">Sem-5</a>
+    <a href="#" onclick="populate(5)">Sem-6</a>
+    <a href="#" onclick="populate(6)">Sem-7</a>
+    <a href="#" onclick="populate(7)">Sem-8</a>
+    <a href="#" onclick="show_cgpa()">CGPA</a>
+  </div>
+  <div id="main">
+    <div id="banner">
+      <img id="usr_img" style="border-radius: 5%;height: 15vh" />
+      <div>
+
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;" class="stud_detail_div">
+          <div id="usr_name"></div>
+          <div id="cur_sem"></div>
+          <div id="code"></div>
         </div>
-      </nav>
-      <div id="mySidebar" class="sidebar">
-        <span class="closebtn" onclick="closeNav()">×</span>
-        <a href="#" onclick="populate(0)">Sem-1</a>
-        <a href="#"onclick="populate(1)">Sem-2</a>
-        <a href="#"onclick="populate(2)">Sem-3</a>
-        <a href="#" onclick="populate(3)">Sem-4</a>
-        <a href="#" onclick="populate(4)">Sem-5</a>
-        <a href="#" onclick="populate(5)">Sem-6</a>
-        <a href="#" onclick="populate(6)">Sem-7</a>
-        <a href="#" onclick="populate(7)">Sem-8</a>
-        <a href="#" onclick="show_cgpa()">CGPA</a>
+        <div id="dept" class="m-2"></div>
       </div>
-      <div id="main">  
-          <div id="banner" style="display: flex;flex-direction: row;justify-content: space-between;">
-              <div style="flex: 0.3;display: flex;flex-direction: column;justify-content: center;">
-                  <img id="usr_img"  style="border-radius: 50%;height: 15vh"/>
-              </div>
-              <div style="display: flex;flex-direction: column;">
-                    <div id="usr_name" style="flex:1" ></div>
-                    <div id="cur_sem" ></div>
-              </div>
-              <div style="display: flex;flex-direction: column;">
-                <div id="dept" style="flex:1"></div>
-                <div id="code"></div>
+
+    </div>
+    <div class="modal fade" id="invalid_alert">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">SEMS</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <div class="modal-body">
+            Semester Not Enrolled
           </div>
-          <div class="modal fade" id="invalid_alert">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">SEMS</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  Semester Not Enrolled
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Ok
-                  </button>
-                </div>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Ok
+            </button>
           </div>
-          <div id="result">
-            <table id="res_table" class="table table-hover table-primary table-striped" >
-                <colgroup>
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 70%;">
-                    <col span="1" style="width: 15%;">
-                 </colgroup>
-                <tr >
-                    <th>Subject Code</th>
-                    <th>Title</th>
-                    <th>Grade</th>
-                  </tr>
-                  <tbody id="res_body">
-                  </tbody>
-              </table>
-              <table id="cgpa_table" class="table table-hover table-primary table-striped" >
-                <tr >
-                    <th>Semester</th>
-                    <th>GPA</th>
-                  </tr>
-                  <tbody id="cgpa_body">
-                  </tbody>
-              </table>
-              <div id="gpa_div" ></div>
-          </div>
+        </div>
       </div>
+    </div>
+    <div id="result">
+      <div class="nav nav-pills" id="sem_nav">
+        <!-- <a class="nav-link active" href="#">SEM 1</a> -->
+      </div>
+      <table id="res_table" class="table table-hover table-primary table-striped">
+        <colgroup>
+          <col span="1" style="width: 15%;">
+          <col span="1" style="width: 70%;">
+          <col span="1" style="width: 15%;">
+        </colgroup>
+        <tr>
+          <th>Subject Code</th>
+          <th>Title</th>
+          <th>Grade</th>
+        </tr>
+        <tbody id="res_body">
+        </tbody>
+      </table>
+      <table id="cgpa_table" class="table table-hover table-primary table-striped">
+        <tr>
+          <th>Semester</th>
+          <th>GPA</th>
+        </tr>
+        <tbody id="cgpa_body">
+        </tbody>
+      </table>
+      <div id="gpa_div"></div>
+    </div>
+  </div>
   <script>
     function calc_cgpa(data) {
       var brcode = data["stud_details"]["brcode"];
@@ -146,6 +150,7 @@
             gpa_temp += cred_score * sub_cred;
             cur_sem_tot_cred += sub_cred;
           })
+          if (!gpa_temp) return;
           ret["gpa"].push(gpa_temp / cur_sem_tot_cred);
           sem_tot_cred.push(cur_sem_tot_cred);
         })
@@ -162,69 +167,95 @@
         })
         ret["cgpa"] = cgpa_temp / tot_cred;
 
+        grades = ret;
+        gpas = ret["gpa"]
+        populate(0);
+
+        //fill the nav bar
+
+
+        sem_nav.innerHTML = "";
+        var temp = "";
+        for(i = 0; i<gpas.length; i++)
+          temp+=`<a class="nav-link ${i==0?'active':''}" href="#" onclick="populate(${i});" >SEM ${i+1}</a>`
+
+        temp+=`<a class="nav-link" href="#" onclick="show_cgpa()">CGPA</a>`
+
+        sem_nav.innerHTML = temp;
+        
+
+
       })
-      return ret;
     }
     function openNav() {
-        document.getElementById("mySidebar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
     }
     function closeNav() {
-        document.getElementById("mySidebar").style.width = "0";
-        document.getElementById("main").style.marginLeft= "0";
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
     }
-    function populate(i)
-    {
-        closeNav(); 
-        var items = results[i];
-        var txt =``;
-        if(!items)
-        {
-            var alert_modal = new bootstrap.Modal(document.getElementById('invalid_alert'));
-            alert_modal.show();
-            return ;
-        }
-        cgpa_table.style.display="none";
-        for(let j=0;j<items.length;j++)
-        {
-            txt+=`
+    function populate(i) {
+      closeNav();
+      var items = results[i];
+      var txt = ``;
+      if (!items) {
+        var alert_modal = new bootstrap.Modal(document.getElementById('invalid_alert'));
+        alert_modal.show();
+        return;
+      }
+      cgpa_table.style.display = "none";
+      for (let j = 0; j < items.length; j++) {
+        txt += `
             <tr>
             <td>${items[j][0]}</td>
             <td>${items[j][1]}</td>
             <td>${items[j][2]}</td>
             </tr>`;
-        }
-        res_body.innerHTML=txt;
-        var cur_gpa;
-        if(isNaN(gpas[i].toFixed(3)))
-            cur_gpa="Unavailable";
-        else
-          cur_gpa =  gpas[i].toFixed(3);
-        gpa_div.innerHTML=`GPA of Semester-${i+1} is <b>${cur_gpa}<b>`;
-        res_table.style.display="table";
+      }
+      res_body.innerHTML = txt;
+      var cur_gpa;
+      if (isNaN(gpas[i].toFixed(3)))
+        cur_gpa = "Unavailable";
+      else
+        cur_gpa = gpas[i].toFixed(3);
+      gpa_div.innerHTML = `GPA of Semester-${i + 1} is <b>${cur_gpa}<b>`;
+      res_table.style.display = "table";
+
+      document.querySelectorAll("#sem_nav a").forEach((e,j)=>{
+        e.classList.remove("active");
+        if (i==j)
+          e.classList.add("active");
+
+      })
     }
-    function show_cgpa()
-    {
-       var txt="";
-       res_table.style.display="none";
-        for(let i=0;i<gpas.length;i++)
-        {
-            let tmp ="";
-            if(isNaN(gpas[i].toFixed(3)))
-                tmp = "Unavailable";
-            else
-                tmp = gpas[i].toFixed(3);
-            txt+=`
+    function show_cgpa() {
+      var txt = "";
+      res_table.style.display = "none";
+      for (let i = 0; i < gpas.length; i++) {
+        let tmp = "";
+        if (isNaN(gpas[i].toFixed(3)))
+          tmp = "Unavailable";
+        else
+          tmp = gpas[i].toFixed(3);
+        txt += `
             <tr>
-            <td>Semester-${i+1}</td>
+            <td>Semester-${i + 1}</td>
             <td>${tmp}</td>
             </tr>`;
-        }
-        cgpa_body.innerHTML=txt;
-        let cgpa = grades["cgpa"].toFixed(3);
-        gpa_div.innerHTML=`Overall CGPA is <b>${cgpa}<b>`;
-        cgpa_table.style.display="table";
-        closeNav();
+      }
+      cgpa_body.innerHTML = txt;
+      let cgpa = grades["cgpa"].toFixed(3);
+      gpa_div.innerHTML = `Overall CGPA is <b>${cgpa}<b>`;
+      cgpa_table.style.display = "table";
+      closeNav();
+
+      document.querySelectorAll("#sem_nav a").forEach((e,j,l)=>{
+        e.classList.remove("active");
+        if (j==l.length-1)
+          e.classList.add("active");
+
+      })
     }
   </script>
 </body>
