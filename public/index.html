@@ -49,11 +49,11 @@
         <input type="text" class="form-control" id="captcha_txt" placeholder="Captcha">
         <label for="captcha_txt">Captcha</label>
       </div>
-      <button class="btn btn-primary" onclick="get_res()">FETCH</button>
+      <button class="btn btn-primary" onclick="get_res()">
+        FETCH
+        <span class="spinner-grow spinner-grow-sm" id="fetch_loader" style="display: none;" ></span>
+      </button>
     </div>
-
-
-
 
     <pre id="result">
 
@@ -75,6 +75,8 @@
 
     function get_res() {
 
+      fetch_loader.style.display = "inline-block";
+
       fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
         {
           method: "post",
@@ -86,6 +88,7 @@
           }),
         }).then(res => res.json()).then(data => {
           result.innerHTML = JSON.stringify(data, null, 4);
+          fetch_loader.style.display = "none";
         })
     }
   </script>
