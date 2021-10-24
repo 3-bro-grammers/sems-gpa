@@ -13,6 +13,7 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
   <link href="style.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/6b08127ac9.js" crossorigin="anonymous"></script>
 
   <!--
     
@@ -28,20 +29,104 @@
 
 </head>
 <script>
-    var data;
+    var data,results,info,gpa,cgpa,gardes;
      window.onload = () =>{
-      data = JSON.parse(localStorage.getItem("data"));
-      calc_cgpa(data);
+      data = JSON.parse(localStorage.getItem("sems"));
+      grades= calc_cgpa(data);
+      gpas=grades["gpa"];
+      results=data["result"];
+      info=data["stud_details"];
+      usr_img.src=`data:image/jpeg;base64,${info["img"]}`;
+        usr_name.innerHTML = `<b>Name:</b> ${info["name"]}`;
+        cur_sem.innerHTML = `<b>Sem:</b> ${info["sem"]}`;
+        dept.innerHTML = `<b>Dept:</b> ${info["branch"]}`;
+        code.innerHTML = `<b>Code:</b> ${info["brcode"]}`;
+        setTimeout(function(){ populate(0); }, 1000);
      }
 </script>
 <body>
-  <pre id="result">
-
-  </pre>
+    <nav class="navbar">
+        <div class="container sems-tit">
+          <a class="navbar-brand"id="sems-tit" href="#">
+            <button class="openbtn" onclick="openNav()"><i class="fas fa-bars"></i></button>
+            SEMS 
+          </a>
+        </div>
+      </nav>
+      <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        <a href="#" onclick="populate(0)">Sem-1</a>
+        <a href="#"onclick="populate(1)">Sem-2</a>
+        <a href="#"onclick="populate(2)">Sem-3</a>
+        <a href="#" onclick="populate(3)">Sem-4</a>
+        <a href="#" onclick="populate(4)">Sem-5</a>
+        <a href="#" onclick="populate(5)">Sem-6</a>
+        <a href="#" onclick="populate(6)">Sem-7</a>
+        <a href="#" onclick="populate(7)">Sem-8</a>
+        <a href="#" onclick="show_cgpa()">CGPA</a>
+      </div>
+      <div id="main">  
+          <div id="banner" style="display: flex;flex-direction: row;justify-content: space-between;">
+              <div style="flex: 0.3;display: flex;flex-direction: column;justify-content: center;">
+                  <img id="usr_img"  style="border-radius: 50%;height: 15vh"/>
+              </div>
+              <div style="display: flex;flex-direction: column;">
+                    <div id="usr_name" style="flex:1" ></div>
+                    <div id="cur_sem" ></div>
+              </div>
+              <div style="display: flex;flex-direction: column;">
+                <div id="dept" style="flex:1"></div>
+                <div id="code"></div>
+          </div>
+          </div>
+          <div class="modal fade" id="invalid_alert">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">SEMS</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Semester Not Enrolled
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Ok
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="result">
+            <table id="res_table" class="table table-hover table-primary table-striped" >
+                <colgroup>
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 70%;">
+                    <col span="1" style="width: 15%;">
+                 </colgroup>
+                <tr >
+                    <th>Subject Code</th>
+                    <th>Title</th>
+                    <th>Grade</th>
+                  </tr>
+                  <tbody id="res_body">
+                  </tbody>
+              </table>
+              <table id="cgpa_table" class="table table-hover table-primary table-striped" >
+                <tr >
+                    <th>Semester</th>
+                    <th>GPA</th>
+                  </tr>
+                  <tbody id="cgpa_body">
+                  </tbody>
+              </table>
+              <div id="gpa_div" ></div>
+          </div>
+      </div>
   <script>
     function calc_cgpa(data) {
       var brcode = data["stud_details"]["brcode"];
-      result.innerHTML = JSON.stringify(data, null, 4);
+      //result.innerHTML = JSON.stringify(data, null, 4);
       var sem_tot_cred = [];
       var ret = {
         gpa: [],
@@ -65,7 +150,7 @@
           sem_tot_cred.push(cur_sem_tot_cred);
         })
 
-        console.log(sem_tot_cred)
+        //console.log(sem_tot_cred)
 
         var tot_cred = 0;
         var cgpa_temp = 0;
@@ -78,8 +163,68 @@
         ret["cgpa"] = cgpa_temp / tot_cred;
 
       })
-
       return ret;
+    }
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
+    function populate(i)
+    {
+        closeNav(); 
+        var items = results[i];
+        var txt =``;
+        if(!items)
+        {
+            var alert_modal = new bootstrap.Modal(document.getElementById('invalid_alert'));
+            alert_modal.show();
+            return ;
+        }
+        cgpa_table.style.display="none";
+        for(let j=0;j<items.length;j++)
+        {
+            txt+=`
+            <tr>
+            <td>${items[j][0]}</td>
+            <td>${items[j][1]}</td>
+            <td>${items[j][2]}</td>
+            </tr>`;
+        }
+        res_body.innerHTML=txt;
+        var cur_gpa;
+        if(isNaN(gpas[i].toFixed(3)))
+            cur_gpa="Unavailable";
+        else
+          cur_gpa =  gpas[i].toFixed(3);
+        gpa_div.innerHTML=`GPA of Semester-${i+1} is <b>${cur_gpa}<b>`;
+        res_table.style.display="table";
+    }
+    function show_cgpa()
+    {
+       var txt="";
+       res_table.style.display="none";
+        for(let i=0;i<gpas.length;i++)
+        {
+            let tmp ="";
+            if(isNaN(gpas[i].toFixed(3)))
+                tmp = "Unavailable";
+            else
+                tmp = gpas[i].toFixed(3);
+            txt+=`
+            <tr>
+            <td>Semester-${i+1}</td>
+            <td>${tmp}</td>
+            </tr>`;
+        }
+        cgpa_body.innerHTML=txt;
+        let cgpa = grades["cgpa"].toFixed(3);
+        gpa_div.innerHTML=`Overall CGPA is <b>${cgpa}<b>`;
+        cgpa_table.style.display="table";
+        closeNav();
     }
   </script>
 </body>

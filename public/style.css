@@ -23,3 +23,81 @@
 #fetch{
     margin: auto;
 }
+#sems-tit{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    font-weight: 700;
+}
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #222d32;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidebar a ,.sidebar>span{
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .sidebar a:hover {
+    color: #fff;
+    background-color: #1e282c;
+    border-left: 5px solid #028fcc;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    background: transparent;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+  @media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+    .sidebar a {
+        font-size: 18px;
+    }
+    #user_img{
+        height: 10vh;
+    }
+  }
+  #banner{
+      word-break: break-word;
+  }
+  table{
+      margin: 1rem 0;
+  }
+  #gpa_div{
+      text-align: center;
+  }
+  #cgpa_table{
+      text-align: center;
+  }
