@@ -96,6 +96,17 @@ exports.handler = async (event) => {
                         sem_data.push(sub_data);
                     }
 
+                    if (i == ses_c.length - 1) {
+                        // console.log(get_mark_res.data);
+                        var { name, branch, brcode, sem } = get_mark_res.data.student;
+                        res_body["stud_details"] = {
+                            name: name,
+                            sem: sem,
+                            branch: branch,
+                            brcode: brcode
+                        }
+                    }
+
                     // console.log(i);
                     resolve(sem_data);
                     // data.push(sem_data);

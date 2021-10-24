@@ -58,7 +58,7 @@
       </div>
       <button id="fetch" class="btn btn-primary" onclick="get_res()">
         FETCH
-        <span class="spinner-grow spinner-grow-sm" id="fetch_loader" style="display: none;" ></span>
+        <span class="spinner-grow spinner-grow-sm" id="fetch_loader" style="display: none;"></span>
       </button>
     </div>
   </div>
@@ -69,6 +69,8 @@
 
     var temp_cookies;
 
+
+    // to load captcha
     fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
       {
         method: "post",
@@ -83,6 +85,7 @@
 
       fetch_loader.style.display = "inline-block";
 
+      // to fetch results
       fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
         {
           method: "post",
@@ -95,7 +98,51 @@
         }).then(res => res.json()).then(data => {
           result.innerHTML = JSON.stringify(data, null, 4);
           fetch_loader.style.display = "none";
+          console.log(calc_cgpa(data));
         })
+    }
+
+    function calc_cgpa(data) {
+      var brcode = data["stud_details"]["brcode"];
+
+      var sem_tot_cred = [];
+      var ret = {
+        gpa: [],
+        cgpa: 0
+      }
+
+      fetch(`credits/${brcode}.json`).then(res => res.json()).then(cred => {
+
+
+        data["result"].forEach((e1, i1) => {
+          var cur_sem_tot_cred = 0;
+          var gpa_temp = 0;
+          e1.forEach((e2, i2) => {
+            if (!e2[2]) return;
+            var cred_score = 10 - ["O", "A+", "A", "B+", "B"].indexOf(e2[2]);
+            var sub_cred = cred[e2[0]] || 3;
+            gpa_temp += cred_score * sub_cred;
+            cur_sem_tot_cred += sub_cred;
+          })
+          ret["gpa"].push(gpa_temp / cur_sem_tot_cred);
+          sem_tot_cred.push(cur_sem_tot_cred);
+        })
+
+        console.log(sem_tot_cred)
+
+        var tot_cred = 0;
+        var cgpa_temp = 0;
+        sem_tot_cred.forEach((e, i) => {
+          if (e) {
+            tot_cred += e;
+            cgpa_temp += e * ret["gpa"][i];
+          }
+        })
+        ret["cgpa"] = cgpa_temp / tot_cred;
+
+      })
+
+      return ret;
     }
   </script>
 </body>
