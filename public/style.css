@@ -87,9 +87,6 @@
     padding: 16px;
 }
 
-#banner {
-    word-break: break-word;
-}
 
 #cgpa_table {
     text-align: center;
@@ -204,6 +201,11 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 2px dashed;
+    width: fit-content;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin: auto;
     margin-bottom: 15px;
 }
 
