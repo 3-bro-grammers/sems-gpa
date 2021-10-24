@@ -19,6 +19,7 @@
     color: rgb(51, 51, 51, 0.9);
     font-size: 1.75rem;
     font-family: monospace;
+    margin: 75px 0 20px 0;
 }
 
 #login {
@@ -101,7 +102,6 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 0 0 3.5rem 0;
     flex-direction: row;
 }
 
