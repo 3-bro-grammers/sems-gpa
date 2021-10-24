@@ -28,7 +28,7 @@
     margin: auto;
 }
 
-#sems-tit {
+.navbar-brand {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #fff;
     font-weight: 700;
