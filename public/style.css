@@ -182,7 +182,7 @@
   overflow: auto;
   white-space: nowrap;
   position: sticky;
-  top: 84px;
+  top: 75px;
   background: white;
   border-width: 2px 0;
   border-color: blue;
@@ -197,7 +197,7 @@
   border: 2px solid #f1f1f1;
   padding: .75rem;
   border-radius: .5rem;
-  background: #fff;
+  background:greenyellow;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
@@ -245,7 +245,13 @@
 }
 .subj{
   flex: 0.75;
+  text-align: left;
 }
+
+.board :nth-child(3){
+  font-weight: bold;
+}
+
 #board_tit{ 
   background: #028fcc;
   color: #fff;

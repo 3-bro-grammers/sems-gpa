@@ -147,6 +147,21 @@
         temp += `<a href="#" onclick="show_cgpa()";">CGPA</a>`
 
 
+
+        for (let i = 0; i < gpas.length; i++) {
+          let tmp = "";
+          if (isNaN(gpas[i].toFixed(3)))
+            tmp = "Unavailable";
+          else
+            tmp = gpas[i].toFixed(3);
+          plot.push([i + 1, parseFloat(tmp), `${tmp} in Sem-${i + 1}`]);
+        }
+
+        // draw cgpa chart
+        
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+
       })
     }
     function populate(i) {
@@ -177,19 +192,12 @@
 
       })
     }
-    var plot=[];
+    var plot = [];
     function show_cgpa() {
       var txt = "";
-      plot=[];
+      plot = [];
       res_table.style.display = "none";
-      for (let i = 0; i < gpas.length; i++) {
-        let tmp = "";
-        if (isNaN(gpas[i].toFixed(3)))
-          tmp = "Unavailable";
-        else
-          tmp = gpas[i].toFixed(3);
-        plot.push([i+1,parseFloat(tmp),`${tmp} in Sem-${i+1}`]);
-      }
+
       let cgpa = grades["cgpa"].toFixed(3);
       gpa_div.innerHTML = `Overall CGPA is <b>${cgpa}<b>`;
       cgpa_table.style.display = "block";
@@ -198,34 +206,55 @@
         if (j == l.length - 1)
           e.classList.add("active");
       });
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
+
+    }
+
+    function drawChart() {
       var chartdata = new google.visualization.DataTable();
-      chartdata.addColumn('number' ,'Sem');
-      chartdata.addColumn('number' ,'Gpa');
-      chartdata.addColumn({type: 'string', role: 'tooltip'});
+      chartdata.addColumn('number', 'Sem');
+      chartdata.addColumn('number', 'Gpa');
+      chartdata.addColumn({ type: 'string', role: 'tooltip' });
       chartdata.addRows(plot);
       var options = {
         legend: 'none',
         hAxis: {
           title: 'Semester',
           maxValue: 8,
-          minValue: 0
+          minValue: 0,
+          gridlines: {
+            count: 8
+          },
+          minorGridlines: {
+            count: 0
+          },
+          titleTextStyle: {
+            bold: true,
+            italic: false,
+            fontSize: '1rem',
+          },
         },
         vAxis: {
           title: 'GPA',
           maxValue: 10,
-          minValue: 0
+          minValue: 5,
+          titleTextStyle: {
+            bold: true,
+            italic: false,
+            fontSize: '1rem',
+          },
         },
+
         pointSize: 5,
       };
 
       var chart = new google.visualization.LineChart(document.getElementById('cgpa_table'));
+      cgpa_table.style.display = 'block';
       chart.draw(chartdata, options);
+      cgpa_table.style.display = 'none';
     }
-    }
-   
+
+
+
   </script>
 </body>
 
