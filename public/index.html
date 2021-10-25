@@ -102,7 +102,7 @@
         body: JSON.stringify({ captcha: null })
       }).then(res => res.json()).then((data) => {
         img_captcha.src = "data:image/jpeg;base64," + data.captcha;
-        temp_cookies = data.cookies[0].substring(0, data.cookies[0].indexOf(";") + 1) + data.cookies[1].substring(0, data.cookies[1].indexOf(";") + 1);
+        temp_cookies = data.cookies.join(" "); // data.cookies[0].substring(0, data.cookies[0].indexOf(";") + 1) + data.cookies[1].substring(0, data.cookies[1].indexOf(";") + 1);
         load_captcha_div.style.display = "none";
       })
 
