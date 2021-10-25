@@ -67,4 +67,3 @@ node_modules/
 functions/
 test/
 lambda/func.js
-lambda/test.js
