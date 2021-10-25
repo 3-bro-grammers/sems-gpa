@@ -138,6 +138,11 @@
   #intro {
       flex-direction: column;
   }
+  #intro_txt{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   #intro_img {
       width: 75%;
   }
