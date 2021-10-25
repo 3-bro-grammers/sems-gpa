@@ -42,22 +42,31 @@
       <div id="intro_txt">
         Having Trouble in Calculating your GPA's ? 
         We will do it for you with a single click. 
-        Just Login , No need to enter datas Manually :)
+        Just Login , No need to enter data Manually :)
         <br>  <br>
         <div id="intro_btn">
           <a href="#login" id="intro_link">Get Started <i class="fas fa-arrow-circle-down"></i></a>
         </div>  
+        <div style="font-size: 1.5rem;
+        text-align: center;
+        font-weight: bold;
+        color: red;
+        margin: 25px;"> 
+          DISCLAIMER : WE ARE UNOFFICIAL<br>
+          <small>(though we depend on the official SEMS)</small>
+        </div>
       </div> 
+      
       <div id="intro_img"></div>
     </div>
     <div id="login">
       <legend id="login-tit" class="mb-3 col-sm|md|lg|xl">Login</legend>
       <div class="form-floating mb-3 col-sm|md|lg|xl" >
-        <input type="text" class="form-control" id="reg_txt" placeholder="Register Number">
+        <input type="text" class="form-control" id="reg_txt" placeholder="Register Number" required>
         <label for="reg_txt">Register Number</label>
       </div>
       <div class="form-floating mb-3 col-sm|md|lg|xl">
-        <input type="password" class="form-control" id="pass_txt" placeholder="Password">
+        <input type="password" class="form-control" id="pass_txt" placeholder="Password" required>
         <label for="pass_txt">Password</label>
       </div>
 
@@ -66,13 +75,15 @@
       </div>
       <img class="img-fluid mb-3 col-sm|md|lg|xl" id="img_captcha">
       <div class="form-floating mb-3 col-sm|md|lg|xl">
-        <input type="text" class="form-control" id="captcha_txt" placeholder="Captcha">
+        <input type="text" class="form-control" id="captcha_txt" placeholder="Captcha" required>
         <label for="captcha_txt">Captcha</label>
       </div>
       <button id="fetch" class="btn btn-primary" onclick="get_res()">
         FETCH
         <span class="spinner-grow spinner-grow-sm" id="fetch_loader" style="display: none;"></span>
       </button>
+      <div id="error_div">Incorrect Captcha !</div>
+      <div id="slow_div">Stay Chill !<br>It usually takes a while.</div>
     </div>
   </div>
   <div id="footer">
@@ -97,7 +108,18 @@
 
     function get_res() {
 
+      if(!(reg_txt.value && pass_txt.value && captcha_txt.value)){
+        error_div.innerHTML = "Please fill in the Details !";
+        error_div.style.display = "block"
+        return;
+      }
+
       fetch_loader.style.display = "inline-block";
+
+      var slow_time_out = setTimeout(()=>{
+        slow_div.style.display = "block";
+      },8000)
+
 
       // to fetch results
       fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
@@ -110,9 +132,18 @@
             cookies: temp_cookies
           }),
         }).then(res => res.json()).then(data => {
-          //result.innerHTML = JSON.stringify(data, null, 4);
+
           fetch_loader.style.display = "none";
-          console.log(data);
+
+          if(data.error){
+            error_div.innerHTML = data.error=="INCORRECT_CAPTCHA"?"Input correct Captcha !":(data.error=="INVALID_USER_PASS"?"Input Correct Reg. num.<br> & Password":"");
+            error_div.style.display = "block";
+            clearTimeout(slow_time_out);
+            return;
+          }
+
+          //result.innerHTML = JSON.stringify(data, null, 4);
+          // console.log(data);
           localStorage.setItem("sems",JSON.stringify(data));
           location.href="user.html";
           //console.log(calc_cgpa(data));
