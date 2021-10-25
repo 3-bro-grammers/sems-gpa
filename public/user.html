@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SEMS GPA PLUGIN</title>
-
+  <link rel="shortcut icon" type="image/png" href="assets/logo-sems.png"/>
   <!--Bootstrap-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -47,19 +47,12 @@
 <body>
   <nav class="navbar">
     <div class="container sems-tit">
-      <span class="navbar-brand" id="sems-tit" href="#">
-        <button class="openbtn" onclick="openNav()"><i class="fas fa-bars"></i></button>
-        SEMS-GPA-PLUGIN
+      <span class="navbar-brand" href="#">
+        <img  class="img-fluid" style="margin: 0 10px;" src="assets/logo-sems.png" alt="semslogo">SEMS-GPA-PLUGIN
       </span>
       <a href="/" style="font-size: 1.5rem; color: crimson;"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </nav>
-  <div id="mySidebar" class="sidebar">
-    <span class="closebtn" onclick="closeNav()">×</span>
-    <div id="sidebar_cont">
-      <!-- <a href="#" onclick="populate(0)">Sem-1</a> -->
-    </div>
-  </div>
   <div id="main">
     <div id="banner">
       <img id="usr_img" style="border-radius: 5%;height: 15vh" />
@@ -73,24 +66,6 @@
         <div id="dept" class="m-2"></div>
       </div>
 
-    </div>
-    <div class="modal fade" id="invalid_alert">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">SEMS</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            Semester Not Enrolled
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              Ok
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
     <div id="result">
       <div class="nav nav-pills" id="sem_nav">
@@ -177,36 +152,18 @@
 
         sem_nav.innerHTML = temp;
 
-        // fill the side bar
-
-        sidebar_cont.innerHTML = "";
         var temp = "";
         for (i = 0; i < gpas.length; i++)
           temp += `<a href="#" onclick="populate(${i});">Sem-${i+1}</a>`
 
         temp += `<a href="#" onclick="show_cgpa()";">CGPA</a>`
 
-        sidebar_cont.innerHTML = temp;
 
       })
     }
-    function openNav() {
-      document.getElementById("mySidebar").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
-    }
-    function closeNav() {
-      document.getElementById("mySidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft = "0";
-    }
     function populate(i) {
-      closeNav();
       var items = results[i];
       var txt = ``;
-      if (!items) {
-        var alert_modal = new bootstrap.Modal(document.getElementById('invalid_alert'));
-        alert_modal.show();
-        return;
-      }
       cgpa_table.style.display = "none";
       for (let j = 0; j < items.length; j++) {
         txt += `
@@ -251,7 +208,6 @@
       let cgpa = grades["cgpa"].toFixed(3);
       gpa_div.innerHTML = `Overall CGPA is <b>${cgpa}<b>`;
       cgpa_table.style.display = "table";
-      closeNav();
 
       document.querySelectorAll("#sem_nav a").forEach((e, j, l) => {
         e.classList.remove("active");

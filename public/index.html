@@ -62,17 +62,17 @@
         <div id="intro_btn">
           <a href="#login" id="intro_link">Get Started <i class="fas fa-arrow-circle-down"></i></a>
         </div>  
-        <div style="font-size: 1.5rem;
-        text-align: center;
-        font-weight: bold;
-        color: red;
-        margin: 25px;"> 
-          DISCLAIMER : WE ARE UNOFFICIAL<br>
-          <small>(though we depend on the official SEMS)</small>
-        </div>
       </div> 
       
       <div id="intro_img"></div>
+    </div>
+    <div style="font-size: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+    color: red;
+    margin: 25px;"> 
+      DISCLAIMER : WE ARE UNOFFICIAL<br>
+      <small>(though we depend on the official SEMS)</small>
     </div>
     <div id="login">
       <legend id="login-tit" class="mb-3 col-sm|md|lg|xl">Login</legend>
@@ -132,6 +132,7 @@
       fetch_loader.style.display = "inline-block";
 
       var slow_time_out = setTimeout(()=>{
+        error_div.style.display = "none";
         slow_div.style.display = "block";
       },8000)
 
@@ -151,7 +152,7 @@
           fetch_loader.style.display = "none";
 
           if(data.error){
-            error_div.innerHTML = data.error=="INCORRECT_CAPTCHA"?"Input correct Captcha !":(data.error=="INVALID_USER_PASS"?"Input Correct Reg. num.<br> & Password":"");
+            error_div.innerHTML = data.error=="INCORRECT_CAPTCHA"?"Incorrect Captcha !":(data.error=="INVALID_USER_PASS"?"Incorrect Reg. num.<br> & Password":"");
             error_div.style.display = "block";
             clearTimeout(slow_time_out);
             return;
