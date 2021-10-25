@@ -14,7 +14,7 @@
     crossorigin="anonymous"></script>
   <link href="style.css" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/6b08127ac9.js" crossorigin="anonymous"></script>
-
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <!--
     
     <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
@@ -68,31 +68,18 @@
 
     </div>
     <div id="result">
-      <div class="nav nav-pills" id="sem_nav">
+      <div class="nav nav-pills nav-fill" id="sem_nav">
         <!-- <a class="nav-link active" href="#">SEM 1</a> -->
       </div>
-      <table id="res_table" class="table table-hover table-primary table-striped">
-        <colgroup>
-          <col span="1" style="width: 15%;">
-          <col span="1" style="width: 70%;">
-          <col span="1" style="width: 15%;">
-        </colgroup>
-        <tr>
-          <th>Subject Code</th>
-          <th>Subject</th>
-          <th>Grade</th>
-        </tr>
-        <tbody id="res_body">
-        </tbody>
-      </table>
-      <table id="cgpa_table" class="table table-hover table-primary table-striped">
-        <tr>
-          <th>Semester</th>
-          <th>GPA</th>
-        </tr>
-        <tbody id="cgpa_body">
-        </tbody>
-      </table>
+      <div id="res_table">
+        <div class="board" id="board_tit">
+          <div><b>Subject Code</b></div>
+          <div class="subj"><b>Subject</b></div>
+          <div><b>Grade</b></div>
+        </div>
+        <div id="res_body"></div>
+      </div>
+      <div id="cgpa_table"></div>
       <div id="gpa_div"></div>
     </div>
   </div>
@@ -167,11 +154,11 @@
       cgpa_table.style.display = "none";
       for (let j = 0; j < items.length; j++) {
         txt += `
-            <tr>
-            <td>${items[j][0]}</td>
-            <td>${items[j][1]}</td>
-            <td>${items[j][2]}</td>
-            </tr>`;
+            <div class="board">
+            <div>${items[j][0]}</div>
+            <div class="subj">${items[j][1]}</div>
+            <div>${items[j][2]}</div>
+            </div>`;
       }
       res_body.innerHTML = txt;
       var cur_gpa;
@@ -180,7 +167,7 @@
       else
         cur_gpa = gpas[i].toFixed(3);
       gpa_div.innerHTML = `GPA of Semester-${i + 1} is <b>${cur_gpa}<b>`;
-      res_table.style.display = "table";
+      res_table.style.display = "flex";
 
       document.querySelectorAll("#sem_nav a").forEach((e, j) => {
         e.classList.remove("active");
@@ -189,8 +176,10 @@
 
       })
     }
+    var plot=[];
     function show_cgpa() {
       var txt = "";
+      plot=[];
       res_table.style.display = "none";
       for (let i = 0; i < gpas.length; i++) {
         let tmp = "";
@@ -198,24 +187,44 @@
           tmp = "Unavailable";
         else
           tmp = gpas[i].toFixed(3);
-        txt += `
-            <tr>
-            <td>SEMESTER-${i + 1}</td>
-            <td>${tmp}</td>
-            </tr>`;
+        plot.push([i+1,parseFloat(tmp),`${tmp} in Sem-${i+1}`]);
       }
-      cgpa_body.innerHTML = txt;
       let cgpa = grades["cgpa"].toFixed(3);
       gpa_div.innerHTML = `Overall CGPA is <b>${cgpa}<b>`;
-      cgpa_table.style.display = "table";
-
+      cgpa_table.style.display = "block";
       document.querySelectorAll("#sem_nav a").forEach((e, j, l) => {
         e.classList.remove("active");
         if (j == l.length - 1)
           e.classList.add("active");
+      });
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+      var chartdata = new google.visualization.DataTable();
+      chartdata.addColumn('number' ,'Sem');
+      chartdata.addColumn('number' ,'Gpa');
+      chartdata.addColumn({type: 'string', role: 'tooltip'});
+      chartdata.addRows(plot);
+      var options = {
+        legend: 'none',
+        hAxis: {
+          title: 'Semester',
+          maxValue: 8,
+          minValue: 0
+        },
+        vAxis: {
+          title: 'GPA',
+          maxValue: 10,
+          minValue: 0
+        },
+        pointSize: 5,
+      };
 
-      })
+      var chart = new google.visualization.LineChart(document.getElementById('cgpa_table'));
+      chart.draw(chartdata, options);
     }
+    }
+   
   </script>
 </body>
 

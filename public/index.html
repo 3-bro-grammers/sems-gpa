@@ -12,14 +12,14 @@
   <meta name="title" content="SEMS-GPA-PLUGIN">
   <meta name="description" content="Fetch Semester Results from SEMS and automate CGPA calculation">
 
-  <meta name="thumbnail" content="assets/logo-sems.png" />
+  <meta name="thumbnail" content="https://sems-gpa.web.app/assets/logo-sems.png" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://sems-gpa.web.app/">
   <meta property="og:title" content="SEMS-GPA-PLUGIN">
   <meta property="og:description" content="Fetch Semester Results from SEMS and automate CGPA calculation">
-  <meta property="og:image" content="assets/logo-sems.png">
+  <meta property="og:image" content="https://sems-gpa.web.app/assets/logo-sems.png">
 
   <!--Bootstrap-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -29,19 +29,6 @@
     crossorigin="anonymous"></script>
   <link href="style.css" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/6b08127ac9.js" crossorigin="anonymous"></script>
-
-  <!--
-    
-    <script defer src="/__/firebase/7.16.0/firebase-app.js"></script>
-    
-    <script defer src="/__/firebase/7.16.0/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.16.0/firebase-storage.js"></script>
-    
-    <script defer src="/__/firebase/init.js"></script>
-  -->
-
 </head>
 
 <body>
@@ -165,49 +152,6 @@
           //console.log(calc_cgpa(data));
         })
     }
-
-    /*function calc_cgpa(data) {
-      var brcode = data["stud_details"]["brcode"];
-
-      var sem_tot_cred = [];
-      var ret = {
-        gpa: [],
-        cgpa: 0
-      }
-
-      fetch(`credits/${brcode}.json`).then(res => res.json()).then(cred => {
-
-
-        data["result"].forEach((e1, i1) => {
-          var cur_sem_tot_cred = 0;
-          var gpa_temp = 0;
-          e1.forEach((e2, i2) => {
-            if (!e2[2]) return;
-            var cred_score = 10 - ["O", "A+", "A", "B+", "B"].indexOf(e2[2]);
-            var sub_cred = cred[e2[0]] || 3;
-            gpa_temp += cred_score * sub_cred;
-            cur_sem_tot_cred += sub_cred;
-          })
-          ret["gpa"].push(gpa_temp / cur_sem_tot_cred);
-          sem_tot_cred.push(cur_sem_tot_cred);
-        })
-
-        console.log(sem_tot_cred)
-
-        var tot_cred = 0;
-        var cgpa_temp = 0;
-        sem_tot_cred.forEach((e, i) => {
-          if (e) {
-            tot_cred += e;
-            cgpa_temp += e * ret["gpa"][i];
-          }
-        })
-        ret["cgpa"] = cgpa_temp / tot_cred;
-
-      })
-
-      return ret;
-    }*/
   </script>
 </body>
 

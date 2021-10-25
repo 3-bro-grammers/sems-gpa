@@ -152,12 +152,14 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border: 2px dashed;
   width: fit-content;
-  padding: 10px 15px;
+  padding: .75rem;
   border-radius: 10px;
   margin: auto;
   margin-bottom: 15px;
+  border-radius: .5rem;
+  background: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 #cgpa_table {
@@ -187,13 +189,19 @@
   font-size: 1.5rem;
   width: fit-content;
   margin: auto;
-  border: 2px solid;
-  padding: 5px;
-  background: lightgreen;
+  border: 2px solid #f1f1f1;
+  padding: .75rem;
+  border-radius: .5rem;
+  background: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+#gpa_div:hover, .board:hover{
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 #gpa_div b {
-  color: red;
+  color: #028fcc;
 }
 
 #error_div, #slow_div {
@@ -210,12 +218,34 @@
 #slow_div {
   color: blue;
 }
-
-
-
-
-/* .stud_detail_div div, #dept {
-  border: 2px solid green;
-  padding: 4px;
-  border-radius: 5px;
-} */
+#cgpa_table{
+  width: 100%;
+  height: 50vh;
+}
+#res_table{
+  flex-direction: column;
+}
+.board{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  border: 2px solid #f1f1f1;
+  padding: .75rem;
+  border-radius: .5rem;
+  background: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  margin-bottom: .5rem;
+}
+.subj{
+  flex: 0.75;
+}
+#board_tit{ 
+  background: #028fcc;
+  color: #fff;
+  font-weight: bold;
+}
+.board:hover{
+  font-weight: bold;
+}
