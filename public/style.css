@@ -1,7 +1,7 @@
 .navbar {
   background-color: #028fcc;
   margin-bottom: 1rem;
-  padding: .75rem;
+  padding: .5rem;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -263,7 +263,7 @@
 #mode_icon{
   font-size: 1.5rem;
   cursor: pointer;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 html {
   transition: all 1.5s;
