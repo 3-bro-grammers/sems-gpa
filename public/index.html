@@ -95,7 +95,7 @@
   </div>
   <script>
     //toggle mode
-    var mode = localStorage.getItem("sems-mode") || 0;
+    var mode = localStorage.getItem("sems-mode") == 'true';
     const htmlEl = document.getElementsByTagName('html')[0];
     const toggle = () => {
       mode = !mode;

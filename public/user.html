@@ -41,7 +41,7 @@
     dept.innerHTML = `<b>Dept:</b> ${info["branch"]}`;
     code.innerHTML = `<b>Code:</b> ${info["brcode"]}`;
     // setTimeout(function(){ populate(0); }, 1000);
-    mode = localStorage.getItem("sems-mode");
+    mode = localStorage.getItem("sems-mode") == 'true';
     setmode();
   }
 </script>
