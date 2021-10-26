@@ -29,7 +29,7 @@
 
 </head>
 <script>
-  var data, results, info, gpas, cgpa, grades;
+  var data, results, info, gpas, cgpa, grades,mode;
   window.onload = () => {
     data = JSON.parse(localStorage.getItem("sems"));
     calc_cgpa(data);
@@ -41,6 +41,8 @@
     dept.innerHTML = `<b>Dept:</b> ${info["branch"]}`;
     code.innerHTML = `<b>Code:</b> ${info["brcode"]}`;
     // setTimeout(function(){ populate(0); }, 1000);
+    mode = localStorage.getItem("sems-mode");
+    setmode();
   }
 </script>
 
@@ -50,7 +52,10 @@
       <span class="navbar-brand" href="#">
         <img class="img-fluid" style="margin: 0 10px;" src="assets/logo-sems.png" alt="semslogo">SEMS-GPA-PLUGIN
       </span>
+      <div>
+      <span id="mode_icon" onclick="toggle()"><i class="fas fa-moon"></i></span>
       <a href="/" style="font-size: 1.5rem; color: crimson;"><i class="fas fa-sign-out-alt"></i></a>
+      </div>
     </div>
   </nav>
   <div id="main">
@@ -84,6 +89,20 @@
     </div>
   </div>
   <script>
+    //toggle mode
+    const htmlEl = document.getElementsByTagName('html')[0];
+    const toggle = () => {
+      mode = !mode;
+      setmode();
+    }
+    const setmode = () => {
+      let theme = mode ? "light" : "dark" ;
+      let insert = mode ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>` ;
+      mode_icon.innerHTML = insert ;
+      htmlEl.dataset.theme = theme;
+      localStorage.setItem("sems-mode",mode);
+    }
+    
     function calc_cgpa(data) {
       var brcode = data["stud_details"]["brcode"];
       //result.innerHTML = JSON.stringify(data, null, 4);

@@ -31,12 +31,13 @@
   <script src="https://kit.fontawesome.com/6b08127ac9.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body onload="setmode()">
   <nav class="navbar">
     <div class="container">
       <span class="navbar-brand" href="#">
         <img  class="img-fluid" style="margin: 0 10px;" src="assets/logo-sems.png" alt="semslogo">SEMS-GPA-PLUGIN
       </span>
+      <span id="mode_icon" onclick="toggle()"><i class="fas fa-moon"></i></span>
     </div>
   </nav>
   <div class="container" id="main-div">
@@ -93,10 +94,21 @@
     <div>Developed by  <a href="https://github.com/3-bro-grammers"><i class="fab fa-github"> 3-bro-grammers</i> </a>
   </div>
   <script>
-
+    //toggle mode
+    var mode = localStorage.getItem("sems-mode") || 0;
+    const htmlEl = document.getElementsByTagName('html')[0];
+    const toggle = () => {
+      mode = !mode;
+      setmode();
+    }
+    const setmode = () => {
+      let theme = mode? "light" : "dark";
+      let insert = mode ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>` ;
+      mode_icon.innerHTML = insert ;
+      htmlEl.dataset.theme = theme;
+      localStorage.setItem("sems-mode",mode);
+    }
     var temp_cookies;
-
-
     // to load captcha
     fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
       {
@@ -148,6 +160,7 @@
           //result.innerHTML = JSON.stringify(data, null, 4);
           // console.log(data);
           localStorage.setItem("sems",JSON.stringify(data));
+          localStorage.setItem("sems-mode",mode);
           location.href="user.html";
           //console.log(calc_cgpa(data));
         })

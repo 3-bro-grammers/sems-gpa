@@ -185,7 +185,7 @@
   top: 75px;
   background: white;
   border-width: 2px 0;
-  border-color: blue;
+  border-color: #f1f1f1;
   border-style: solid;
 }
 
@@ -259,4 +259,25 @@
 }
 .board:hover{
   font-weight: bold;
+}
+#mode_icon{
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+html {
+  transition: all 1.5s;
+}
+html[data-theme='dark'] {
+  background: #000;
+  filter: invert(1) hue-rotate(180deg);
+}
+html[data-theme='dark'] img {
+  filter: invert(1) hue-rotate(180deg);
+}
+html[data-theme='light'] #fetch{
+  filter: invert(1) hue-rotate(180deg);
+}
+html[data-theme='light'] .active{
+  background: #028fcc !important;
 }
