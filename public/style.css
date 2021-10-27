@@ -51,7 +51,7 @@
 }
 
 #intro {
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -123,7 +123,7 @@
   justify-content: space-around;
   flex-direction: row;
   background-color: #028fcc;
-  padding: 2rem;
+  padding: 1rem 2rem;
   margin-top: 4rem;
   color: #fff;
   font-size: 1.5rem;
