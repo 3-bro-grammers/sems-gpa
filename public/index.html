@@ -106,7 +106,11 @@
     
 
     //toggle mode
-    var mode = localStorage.getItem("sems-mode") == 'true';
+    var mode;
+    if(localStorage.getItem("sems-mode"))
+    mode = localStorage.getItem("sems-mode") == 'true';
+    else
+    mode = true;
     const htmlEl = document.getElementsByTagName('html')[0];
     const toggle = () => {
       mode = !mode;
