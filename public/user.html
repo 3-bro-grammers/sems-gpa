@@ -29,13 +29,17 @@
 
 </head>
 <script>
-  var data, results, info, gpas, cgpa, grades,mode;
+  var data, results, info, gpas, cgpa, grades, mode;
   window.onload = () => {
     data = JSON.parse(localStorage.getItem("sems"));
     calc_cgpa(data);
     results = data["result"];
     info = data["stud_details"];
-    usr_img.src = `data:image/jpeg;base64,${info["img"]}`;
+    if (info['img']) {
+      usr_img.src = `data:image/jpeg;base64,${info["img"]}`;
+    }else{
+      usr_img.style.display = 'none'
+    }
     usr_name.innerHTML = `<b>Name:</b> ${info["name"]}`;
     cur_sem.innerHTML = `<b>Sem:</b> ${info["sem"]}`;
     dept.innerHTML = `<b>Dept:</b> ${info["branch"]}`;
@@ -53,8 +57,8 @@
         <img class="img-fluid" style="margin: 0 10px;" src="assets/logo-sems.png" alt="semslogo">SEMS-GPA-PLUGIN
       </span>
       <div>
-      <span id="mode_icon" onclick="toggle()"><i class="fas fa-moon"></i></span>
-      <a href="/" style="font-size: 1.5rem; color: crimson;"><i class="fas fa-sign-out-alt"></i></a>
+        <span id="mode_icon" onclick="toggle()"><i class="fas fa-moon"></i></span>
+        <a href="/" style="font-size: 1.5rem; color: crimson;"><i class="fas fa-sign-out-alt"></i></a>
       </div>
     </div>
   </nav>
@@ -96,13 +100,13 @@
       setmode();
     }
     const setmode = () => {
-      let theme = mode ? "light" : "dark" ;
-      let insert = mode ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>` ;
-      mode_icon.innerHTML = insert ;
+      let theme = mode ? "light" : "dark";
+      let insert = mode ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>`;
+      mode_icon.innerHTML = insert;
       htmlEl.dataset.theme = theme;
       localStorage.setItem("sems-mode",mode);
     }
-    
+
     function calc_cgpa(data) {
       var brcode = data["stud_details"]["brcode"];
       //result.innerHTML = JSON.stringify(data, null, 4);
@@ -177,7 +181,7 @@
         }
 
         // draw cgpa chart
-        
+
         google.charts.load("current", { packages: ["corechart"] });
         google.charts.setOnLoadCallback(drawChart);
 
