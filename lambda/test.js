@@ -1,7 +1,18 @@
 require('./index').handler({
     body: JSON.stringify({
-        reg: "2018504001", pass: "Ikaa@2001", captcha: "", 
-        cookies:'ci_session=e26e0e716a8044cf808384bc20b14962750f9394; cookiesession1=678B2867FGHIJKLMNOPQRSTUWXYZA2BB;'
-        
+        reg: "2018504001", pass: "", captcha: "",
+        cookies: 'ci_session=fcca1464489979836b50b2b4ffe672495479c97e; path=/; secure; HttpOnly'
+
     })
-}).then(res=>console.log(res))
+}).then(res => {
+
+    var data = JSON.parse(res.body);
+    if (data.captcha) {
+        console.log(data.cookies);
+        require('child_process').exec(`start chrome "data:image/jpeg;base64, ${data.captcha}"`);
+    }
+    else{
+        console.log(data)
+    }
+
+})
