@@ -4,5 +4,9 @@
 
 <p>
 <img src="screenshots/1.png" height=400 style="margin:15px">
-<img src="screenshots/2.png" height=400 style="margin:15px">
+<img src="screenshots/3.png" height=400 style="margin:15px">
 </p>
+
+## Visualise Your GPA's Graphically
+
+<img src="screenshots/4.png">
