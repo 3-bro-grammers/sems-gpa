@@ -209,11 +209,20 @@
   color: #028fcc;
 }
 
+.msg_div {
+  position: relative;
+  width: 100%;
+}
+
 #error_div, #slow_div {
-  margin: 10px auto;
-  font-weight: bold;
-  display: none;
-  text-align: center;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    transform: translate(-50%, 12px);
+    left: 50%;
+    transition: all 1s;
+    opacity: 0;
+    width: 100%;
 }
 
 #error_div {

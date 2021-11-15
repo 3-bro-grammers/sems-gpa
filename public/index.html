@@ -88,8 +88,10 @@
         FETCH
         <span class="spinner-grow spinner-grow-sm" id="fetch_loader" style="display: none;"></span>
       </button>
-      <div id="error_div">Incorrect Captcha !</div>
-      <div id="slow_div">Stay Chill !<br>It usually takes a while.</div>
+      <div class="msg_div">
+        <div id="error_div">Incorrect Captcha !</div>
+        <div id="slow_div">Stay Chill !<br>It usually takes a while.</div>
+      </div>
     </div>
   </div>
   <div id="footer">
@@ -137,17 +139,20 @@
 
     function get_res() {
 
+      error_div.style.opacity = "0";
+
       if(!(reg_txt.value && pass_txt.value && captcha_txt.value)){
         error_div.innerHTML = "Please fill in the Details !";
-        error_div.style.display = "block"
+        error_div.style.opacity = "1";
+        slow_div.style.opacity = "0";
         return;
       }
 
       fetch_loader.style.display = "inline-block";
 
       var slow_time_out = setTimeout(()=>{
-        error_div.style.display = "none";
-        slow_div.style.display = "block";
+        error_div.style.opacity = "0";
+        slow_div.style.opacity = "1";
       },8000)
 
 
@@ -167,7 +172,8 @@
 
           if(data.error || !data.result.length){
             error_div.innerHTML = data.error=="INCORRECT_CAPTCHA"?"Incorrect Captcha !":(data.error=="INVALID_USER_PASS"?"Incorrect Reg. num.<br> & Password":"Please RETRY");
-            error_div.style.display = "block";
+            error_div.style.opacity = "1";
+            slow_div.style.opacity = "0";
             clearTimeout(slow_time_out);
             return;
           }
