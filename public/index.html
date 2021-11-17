@@ -5,10 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script src="/__/firebase/7.16.0/firebase-app.js"></script>
-  <script src="/__/firebase/7.16.0/firebase-database.js"></script>
-  <script src="/__/firebase/init.js"></script>
-
   <!-- Primary Meta Tags -->
   <title>SEMS GPA PLUGIN</title>
   <link rel="shortcut icon" type="image/png" href="assets/logo-sems.png"/>
@@ -104,12 +100,6 @@
     <div>Developed by  <a href="https://github.com/3-bro-grammers"><i class="fab fa-github"> 3-bro-grammers</i> </a></div>
   </div>
   <script>
-    var db = firebase.database();
-    db.ref('stats/count').once('value').then(snap=>{
-      fetch_cnt_span.innerHTML = snap.val();
-      fetch_cnt_span.style.filter = 'none';
-    })
-    
 
     //toggle mode
     var mode;
@@ -139,6 +129,10 @@
         img_captcha.src = "data:image/jpeg;base64," + data.captcha;
         temp_cookies = data.cookies.join(" "); // data.cookies[0].substring(0, data.cookies[0].indexOf(";") + 1) + data.cookies[1].substring(0, data.cookies[1].indexOf(";") + 1);
         load_captcha_div.style.display = "none";
+
+        fetch_cnt_span.innerHTML = data.count;
+        fetch_cnt_span.style.filter = 'none';
+
       })
 
     function get_res() {
@@ -186,7 +180,7 @@
           // console.log(data);
           localStorage.setItem("sems",JSON.stringify(data));
           localStorage.setItem("sems-mode",mode);
-          db.ref('stats/count').transaction(val=>val+1).then(()=>location.href="user.html");
+          location.href="user.html"
           //console.log(calc_cgpa(data));
         })
     }

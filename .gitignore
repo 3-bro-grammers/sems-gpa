@@ -67,3 +67,4 @@ node_modules/
 functions/
 test/
 lambda/func.js
+lambda/service_account.json
