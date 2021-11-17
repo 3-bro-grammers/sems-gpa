@@ -8,11 +8,9 @@ require('./index').handler({
 
     var data = JSON.parse(res.body);
     if (data.captcha) {
-        console.log(data.cookies);
         require('child_process').exec(`start chrome "data:image/jpeg;base64, ${data.captcha}"`);
     }
-    else{
-        console.log(data)
-    }
+    console.log(data)
+    
 
 })
