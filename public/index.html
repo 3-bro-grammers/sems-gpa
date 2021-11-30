@@ -7,7 +7,7 @@
 
   <!-- Primary Meta Tags -->
   <title>SEMS GPA PLUGIN</title>
-  <link rel="shortcut icon" type="image/png" href="assets/logo-sems.png"/>
+  <link rel="shortcut icon" type="image/png" href="assets/logo-sems.png" />
   <meta name="title" content="SEMS-GPA-PLUGIN">
   <meta name="description" content="Fetch Semester Results from SEMS and automate CGPA calculation">
 
@@ -19,11 +19,11 @@
   <meta property="og:title" content="SEMS-GPA-PLUGIN">
   <meta property="og:description" content="Fetch Semester Results from SEMS and automate CGPA calculation">
   <meta property="og:image" content="https://sems-gpa.web.app/assets/logo-sems.png">
-  
+
   <!--fonts-->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
-  
+
   <!--Bootstrap-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -38,7 +38,7 @@
   <nav class="navbar">
     <div class="container">
       <span class="navbar-brand" href="#">
-        <img  class="img-fluid" style="margin: 0 10px;" src="assets/logo-sems.png" alt="semslogo">SEMS-GPA-PLUGIN
+        <img class="img-fluid" style="margin: 0 10px;" src="assets/logo-sems.png" alt="semslogo">SEMS-GPA-PLUGIN
       </span>
       <span id="mode_icon" onclick="toggle()"><i class="fas fa-moon"></i></span>
     </div>
@@ -46,28 +46,28 @@
   <div class="container" id="main-div">
     <div id="intro">
       <div id="intro_txt">
-        Having Trouble in Calculating your GPA's ? 
-        We will do it for you with a single click. 
+        Having Trouble in Calculating your GPA's ?
+        We will do it for you with a single click.
         Just Login , No need to enter data Manually :)
-        <br>  <br>
+        <br> <br>
         <div id="intro_btn">
           <a href="#login" id="intro_link">Get Started <i class="fas fa-arrow-circle-down"></i></a>
-        </div>  
-      </div> 
-      
+        </div>
+      </div>
+
       <div id="intro_img"></div>
     </div>
     <div style="font-size: 1.5rem;
     text-align: center;
     font-weight: bold;
     color: red;
-    margin: 25px;"> 
+    margin: 25px;">
       DISCLAIMER : WE ARE UNOFFICIAL<br>
       <small>(though we depend on the official SEMS)</small>
     </div>
     <div id="login">
       <legend id="login-tit" class="mb-3 col-sm|md|lg|xl">Login</legend>
-      <div class="form-floating mb-3 col-sm|md|lg|xl" >
+      <div class="form-floating mb-3 col-sm|md|lg|xl">
         <input type="text" class="form-control" id="reg_txt" placeholder="Register Number" required>
         <label for="reg_txt">Register Number</label>
       </div>
@@ -84,7 +84,7 @@
         <input type="text" class="form-control" id="captcha_txt" placeholder="Captcha" required>
         <label for="captcha_txt">Captcha</label>
       </div>
-      <button id="fetch" class="btn btn-primary" onclick="get_res()">
+      <button id="fetch_btn" class="btn btn-primary" onclick="get_res()">
         FETCH
         <span class="spinner-grow spinner-grow-sm" id="fetch_loader" style="display: none;"></span>
       </button>
@@ -95,29 +95,31 @@
     </div>
   </div>
   <div id="footer">
-    <div id="fetch_cnt_div" style="font-size: 1rem; margin: 2px;"><i class="fas fa-check-circle"></i> <span id="fetch_cnt_span" style="font-weight: bold; filter: blur(2px);">50</span> fetches so far</div>
-    <div>© 2021</div> 
-    <div>Developed by  <a href="https://github.com/3-bro-grammers"><i class="fab fa-github"> 3-bro-grammers</i> </a></div>
+    <div id="fetch_cnt_div" style="font-size: 1rem; margin: 2px;"><i class="fas fa-check-circle"></i> <span
+        id="fetch_cnt_span" style="font-weight: bold; filter: blur(2px);">50</span> fetches so far</div>
+    <div>© 2021</div>
+    <div>Developed by <a href="https://github.com/3-bro-grammers"><i class="fab fa-github"> 3-bro-grammers</i> </a>
+    </div>
   </div>
   <script>
 
     //toggle mode
     var mode;
-    if(localStorage.getItem("sems-mode"))
-    mode = localStorage.getItem("sems-mode") == 'true';
+    if (localStorage.getItem("sems-mode"))
+      mode = localStorage.getItem("sems-mode") == 'true';
     else
-    mode = true;
+      mode = true;
     const htmlEl = document.getElementsByTagName('html')[0];
     const toggle = () => {
       mode = !mode;
       setmode();
     }
     const setmode = () => {
-      let theme = mode? "light" : "dark";
-      let insert = mode ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>` ;
-      mode_icon.innerHTML = insert ;
+      let theme = mode ? "light" : "dark";
+      let insert = mode ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>`;
+      mode_icon.innerHTML = insert;
       htmlEl.dataset.theme = theme;
-      localStorage.setItem("sems-mode",mode);
+      localStorage.setItem("sems-mode", mode);
     }
     var temp_cookies;
     // to load captcha
@@ -133,13 +135,23 @@
         fetch_cnt_span.innerHTML = data.count;
         fetch_cnt_span.style.filter = 'none';
 
+      }).catch(e => {
+        error_div.innerHTML = "SERVER ERROR !";
+        error_div.style.opacity = "1";
+        slow_div.style.opacity = "0";
+        // clearTimeout(slow_time_out);
+        // img_captcha.style.display = "none";
+        load_captcha_div.style.display = "none";
+        fetch_btn.disabled = "true"
+        return;
       })
+
 
     function get_res() {
 
       error_div.style.opacity = "0";
 
-      if(!(reg_txt.value && pass_txt.value && captcha_txt.value)){
+      if (!(reg_txt.value && pass_txt.value && captcha_txt.value)) {
         error_div.innerHTML = "Please fill in the Details !";
         error_div.style.opacity = "1";
         slow_div.style.opacity = "0";
@@ -148,10 +160,10 @@
 
       fetch_loader.style.display = "inline-block";
 
-      var slow_time_out = setTimeout(()=>{
+      var slow_time_out = setTimeout(() => {
         error_div.style.opacity = "0";
         slow_div.style.opacity = "1";
-      },8000)
+      }, 8000)
 
 
       // to fetch results
@@ -168,8 +180,8 @@
 
           fetch_loader.style.display = "none";
 
-          if(data.error || !data.result.length){
-            error_div.innerHTML = data.error=="INCORRECT_CAPTCHA"?"Incorrect Captcha !":(data.error=="INVALID_USER_PASS"?"Incorrect Reg. num.<br> & Password":"Please RETRY");
+          if (data.error || !data.result.length) {
+            error_div.innerHTML = data.error == "INCORRECT_CAPTCHA" ? "Incorrect Captcha !" : (data.error == "INVALID_USER_PASS" ? "Incorrect Reg. num.<br> & Password" : "Please RETRY");
             error_div.style.opacity = "1";
             slow_div.style.opacity = "0";
             clearTimeout(slow_time_out);
@@ -178,10 +190,16 @@
 
           //result.innerHTML = JSON.stringify(data, null, 4);
           // console.log(data);
-          localStorage.setItem("sems",JSON.stringify(data));
-          localStorage.setItem("sems-mode",mode);
-          location.href="user.html"
+          localStorage.setItem("sems", JSON.stringify(data));
+          localStorage.setItem("sems-mode", mode);
+          location.href = "user.html"
           //console.log(calc_cgpa(data));
+        }).catch(e => {
+          error_div.innerHTML = "SERVER ERROR !";
+          error_div.style.opacity = "1";
+          slow_div.style.opacity = "0";
+          clearTimeout(slow_time_out);
+          return;
         })
     }
   </script>

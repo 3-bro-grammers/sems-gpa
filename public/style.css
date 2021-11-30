@@ -30,7 +30,7 @@
   margin: 1rem;
 }
 
-#fetch {
+#fetch_btn {
   margin: auto;
 }
 
@@ -284,7 +284,7 @@ html[data-theme='dark'] {
 html[data-theme='dark'] img {
   filter: invert(1) hue-rotate(180deg);
 }
-html[data-theme='light'] #fetch{
+html[data-theme='light'] #fetch_btn{
   filter: invert(1) hue-rotate(180deg);
 }
 html[data-theme='light'] .active{
