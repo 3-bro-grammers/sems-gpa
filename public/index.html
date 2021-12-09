@@ -192,6 +192,7 @@
           // console.log(data);
           localStorage.setItem("sems", JSON.stringify(data));
           localStorage.setItem("sems-mode", mode);
+          localStorage.setItem("canLoadUser", "true");
           location.href = "user.html"
           //console.log(calc_cgpa(data));
         }).catch(e => {

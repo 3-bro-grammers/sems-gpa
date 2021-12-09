@@ -94,6 +94,13 @@
   </div>
   <script>
     //toggle mode
+
+    if(localStorage.getItem("canLoadUser")!="true"){
+      location.href="/";
+    }
+
+    localStorage.setItem("canLoadUser", "false");
+
     const htmlEl = document.getElementsByTagName('html')[0];
     const toggle = () => {
       mode = !mode;
