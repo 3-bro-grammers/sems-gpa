@@ -116,6 +116,16 @@
 
     function calc_cgpa(data) {
       var brcode = data["stud_details"]["brcode"];
+
+      // CEG Map
+
+      switch(brcode){
+        case 105: brcode = 504; break;
+        case 115: brcode = 506; break;
+      }
+
+
+
       //result.innerHTML = JSON.stringify(data, null, 4);
       var sem_tot_cred = [];
       var ret = {
