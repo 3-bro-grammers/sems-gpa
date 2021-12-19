@@ -161,7 +161,16 @@ exports.handler = async (event) => {
             var data = await Promise.all(data_Promises);
             await db.ref("stats/count").transaction(v => v + 1);
 
-            // console.log(data)
+            var x = await axios({
+                method: 'get',
+                url: "https://acoe.annauniv.edu/sems/login/logout",
+                headers: {
+                    Cookie: cookies
+                },
+
+            })
+
+            // console.log(x.data)
 
             res_body["result"] = data;
         }

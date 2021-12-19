@@ -22,5 +22,7 @@ Content-Type: application/x-www-form-urlencoded
 
 regno=2018504001&session=XI4CW7ER9evbj5JBsk9QsHF7h4T00%3EDVzfmZ74VaEWMvxo2aQYbjaeN%2BXgDinB9qKxq8dl%3Enx9p%3EEm1NOomBCA%3D%3D
 
+GET https://acoe.annauniv.edu/sems/login/logout
+
 
 
