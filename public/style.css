@@ -290,3 +290,9 @@ html[data-theme='light'] #fetch_btn{
 html[data-theme='light'] .active{
   background: #028fcc !important;
 }
+
+iframe {
+  transform: translate(-50%);
+  left: 50%;
+  position: absolute;
+}
