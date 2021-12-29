@@ -291,8 +291,20 @@ html[data-theme='light'] .active{
   background: #028fcc !important;
 }
 
-iframe {
-  transform: translate(-50%);
-  left: 50%;
+html>div>div {
+  background: black !important;
+}
+
+html>div>div>div>div:after {
+  content: "We Place ADs to keep this site FREE 💖 😇";
+  font-size: 1rem;
   position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%);
+  font-weight: bolder;
+  z-index: 100000000000;
+  color: yellow;
+  text-align: center;
+  display: inherit;
 }
