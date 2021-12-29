@@ -113,7 +113,7 @@
       mode = localStorage.getItem("sems-mode") == 'true';
     else
       mode = true;
-    const htmlEl = document.getElementsByTagName('html')[0];
+    const bodyEl = document.getElementsByTagName('body')[0];
     const toggle = () => {
       mode = !mode;
       setmode();
@@ -122,7 +122,7 @@
       let theme = mode ? "light" : "dark";
       let insert = mode ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>`;
       mode_icon.innerHTML = insert;
-      htmlEl.dataset.theme = theme;
+      bodyEl.dataset.theme = theme;
       localStorage.setItem("sems-mode", mode);
     }
     var temp_cookies;

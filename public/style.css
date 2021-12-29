@@ -274,20 +274,20 @@
   cursor: pointer;
   margin-right: 0.5rem;
 }
-html {
+body {
   transition: all 1.5s;
 }
-html[data-theme='dark'] {
+body[data-theme='dark'] {
   background: #000;
   filter: invert(1) hue-rotate(180deg);
 }
-html[data-theme='dark'] img {
+body[data-theme='dark'] img {
   filter: invert(1) hue-rotate(180deg);
 }
-html[data-theme='light'] #fetch_btn{
+body[data-theme='light'] #fetch_btn{
   filter: invert(1) hue-rotate(180deg);
 }
-html[data-theme='light'] .active{
+body[data-theme='light'] .active{
   background: #028fcc !important;
 }
 
