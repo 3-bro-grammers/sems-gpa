@@ -68,4 +68,5 @@ functions/
 test/
 lambda/func.js
 lambda/service_account.json
-unprocessed/sems-gpa-visits-export_29_12_21.json
+unprocessed/
+dist/

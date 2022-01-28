@@ -1,7 +1,9 @@
-require('./index').handler({
+require('dotenv').config({override:true});
+
+require('./dist/bundle').handler({
     body: JSON.stringify({
-        reg: "2018504001", pass: "", captcha: "",
-        cookies: 'ci_session=28086c9cf5838b22f94a0f0ebcf4a7995a1d93d1; path=/; secure; HttpOnly'
+        reg: "2018504001", pass: "Ikaa@2001", captcha: "692124",
+        cookies: 'ci_session=bfb62eea32aac6dbfa4705f468b8fac4368d5f3f; path=/; secure; HttpOnly'
 
     })
 }).then(res => {
