@@ -35,7 +35,7 @@ global.main = async (params) => {
 
 
     var res_body = {}
-    var req_body = params
+    var req_body = JSON.parse(params.__ow_body);
 
     if (!req_body.captcha) {
 
