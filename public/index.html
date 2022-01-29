@@ -184,8 +184,8 @@
 
           fetch_loader.style.display = "none";
 
-          if (data.error || !data.result.length) {
-            error_div.innerHTML = data.error == "INCORRECT_CAPTCHA" ? "Incorrect Captcha !" : (data.error == "INVALID_USER_PASS" ? "Incorrect Reg. num.<br> & Password" : "Please RETRY");
+          if (data.throw_error || !data.result.length) {
+            error_div.innerHTML = data.throw_error == "INCORRECT_CAPTCHA" ? "Incorrect Captcha !" : (data.throw_error == "INVALID_USER_PASS" ? "Incorrect Reg. num.<br> & Password" : "Please RETRY");
             error_div.style.opacity = "1";
             slow_div.style.opacity = "0";
             clearTimeout(slow_time_out);

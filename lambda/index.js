@@ -66,9 +66,9 @@ global.main = async (params) => {
         })
         // console.log("LOGIN res", login_res.data);
         if (login_res.data.indexOf("Incorrect captcha") > -1)
-            res_body["error"] = "INCORRECT_CAPTCHA";
+            res_body["throw_error"] = "INCORRECT_CAPTCHA";
         else if (login_res.data.indexOf("Invalid Username or Password") > -1)
-            res_body["error"] = "INVALID_USER_PASS";
+            res_body["throw_error"] = "INVALID_USER_PASS";
         else {
 
             if (login_res.data.indexOf("Logout from all other machine") > -1) {
