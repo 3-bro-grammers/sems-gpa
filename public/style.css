@@ -295,6 +295,7 @@ html>div>div {
   background: black !important;
 }
 
+/* Propeller ADS div
 html>div>div>div>div:after {
   content: "We Place ADs to keep this site FREE 💖 😇";
   font-size: 1rem;
@@ -307,4 +308,4 @@ html>div>div>div>div:after {
   color: yellow;
   text-align: center;
   display: inherit;
-}
+} */
