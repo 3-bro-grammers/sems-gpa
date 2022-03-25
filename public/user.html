@@ -171,25 +171,28 @@
 
         grades = ret;
         gpas = ret["gpa"]
-        populate(0);
+        
 
         //fill the nav bar
 
 
         sem_nav.innerHTML = "";
-        var temp = "";
-        for (i = 0; i < gpas.length; i++)
-          temp += `<a class="nav-link ${i == 0 ? 'active' : ''}" href="#" onclick="populate(${i});" >SEM ${i + 1}</a>`
+        var temp = `<a class="nav-link active"  href="#" onclick="show_cgpa()">CGPA</a>`;
 
-        temp += `<a class="nav-link" href="#" onclick="show_cgpa()">CGPA</a>`
+        for (i = gpas.length - 1; i>=0; i--) 
+          temp += `<a class="nav-link" href="#" onclick="populate(${i});" >SEM ${i + 1}</a>`
+
 
         sem_nav.innerHTML = temp;
+        
 
         var temp = "";
+        temp += `<a href="#" onclick="show_cgpa()";">CGPA</a>`
+
         for (i = 0; i < gpas.length; i++)
           temp += `<a href="#" onclick="populate(${i});">Sem-${i + 1}</a>`
 
-        temp += `<a href="#" onclick="show_cgpa()";">CGPA</a>`
+        
 
 
 
@@ -232,7 +235,7 @@
 
       document.querySelectorAll("#sem_nav a").forEach((e, j) => {
         e.classList.remove("active");
-        if (i == j)
+        if (i + j == gpas.length)
           e.classList.add("active");
 
       })
@@ -240,7 +243,7 @@
     var plot = [];
     function show_cgpa() {
       var txt = "";
-      plot = [];
+      // plot = [];
       res_table.style.display = "none";
 
       let cgpa = grades["cgpa"].toFixed(3);
@@ -248,11 +251,13 @@
       cgpa_table.style.display = "block";
       document.querySelectorAll("#sem_nav a").forEach((e, j, l) => {
         e.classList.remove("active");
-        if (j == l.length - 1)
+        if (j == 0)
           e.classList.add("active");
       });
 
     }
+
+    window.onresize = drawChart;
 
     function drawChart() {
       var chartdata = new google.visualization.DataTable();
@@ -296,6 +301,8 @@
       cgpa_table.style.display = 'block';
       chart.draw(chartdata, options);
       cgpa_table.style.display = 'none';
+
+      show_cgpa();
     }
 
 
