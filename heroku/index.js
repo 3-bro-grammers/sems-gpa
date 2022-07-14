@@ -9,9 +9,7 @@ app.use(express.json({urlencoded: true}));
 
 app.post('/', async (req, res) => {
 
-    const axios = require('axios')
-    const crypto = require('crypto')
-
+    
     var admin = require("firebase-admin");
 
     //ENCRYPTED FIREBASE_PRIVATE_KEY
@@ -37,11 +35,13 @@ app.post('/', async (req, res) => {
             databaseURL: "https://sems-gpa.firebaseio.com"
         });
 
-    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
 
     var db = admin.database();
 
+    const axios = require('axios')
 
+    
     var res_body = {}
     var req_body = req.body;
 
@@ -58,7 +58,19 @@ app.post('/', async (req, res) => {
 
         res_body["count"] = (await (db.ref("stats/count").once("value"))).val();
 
+        res.json(res_body);
+
     } else {
+
+        var db_push_key = db.ref("cur_resp").push().key;
+
+        res.json({db_push_key: db_push_key});
+
+
+        
+        const crypto = require('crypto')
+        process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
         var { reg, pass, captcha, cookies } = req_body;
 
         var pass_hash = crypto.createHash('sha512').update(pass).digest('hex');
@@ -190,11 +202,13 @@ app.post('/', async (req, res) => {
             res_body["result"] = data;
         }
 
+        db.ref(`cur_resp/${db_push_key}`).set(res_body);
+
     }
 
     // console.log(res_body);
 
-    res.json(res_body);
+    
 
     return;
 

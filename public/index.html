@@ -33,6 +33,11 @@
   <link href="style.css" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/6b08127ac9.js" crossorigin="anonymous"></script>
 
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+
   <!-- Google Adsense -->
   <!-- <script data-ad-client="ca-pub-9623039278843283" async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
@@ -106,6 +111,25 @@
     </div>
   </div>
   <script>
+
+      const firebaseConfig = {
+          apiKey: "AIzaSyATDZyseTz9iwoHqn-iFhVWpMxi5Y0o0bA",
+          authDomain: "sems-gpa.firebaseapp.com",
+          databaseURL: "https://sems-gpa.firebaseio.com",
+          projectId: "sems-gpa",
+          storageBucket: "sems-gpa.appspot.com",
+          messagingSenderId: "1072056217843",
+          appId: "1:1072056217843:web:be12267f2733ab31358786",
+          measurementId: "G-RPG940RLLG"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+          const app = firebase.initializeApp(firebaseConfig);
+          const analytics = firebase.analytics()
+        }
+
+        var db = firebase.database();
 
     //toggle mode
     var mode;
@@ -189,23 +213,32 @@
           }),
         }).then(res => res.json()).then(data => {
 
-          fetch_loader.style.display = "none";
 
-          if (data.throw_error || !data.result.length) {
-            error_div.innerHTML = data.throw_error == "INCORRECT_CAPTCHA" ? "Incorrect Captcha !" : (data.throw_error == "INVALID_USER_PASS" ? "Incorrect Reg. num.<br> & Password" : "Please RETRY");
-            error_div.style.opacity = "1";
-            slow_div.style.opacity = "0";
-            clearTimeout(slow_time_out);
-            return;
-          }
+          db.ref(`cur_resp/${data.db_push_key}`).on('value', (snap)=>{
 
-          //result.innerHTML = JSON.stringify(data, null, 4);
-          // console.log(data);
-          localStorage.setItem("sems", JSON.stringify(data));
-          localStorage.setItem("sems-mode", mode);
-          localStorage.setItem("canLoadUser", "true");
-          location.href = "user.html"
-          //console.log(calc_cgpa(data));
+            var data = snap.val();
+            if(data){
+              fetch_loader.style.display = "none";              
+
+              if (data.throw_error || !data.result.length) {
+                error_div.innerHTML = data.throw_error == "INCORRECT_CAPTCHA" ? "Incorrect Captcha !" : (data.throw_error == "INVALID_USER_PASS" ? "Incorrect Reg. num.<br> & Password" : "Please RETRY");
+                error_div.style.opacity = "1";
+                slow_div.style.opacity = "0";
+                clearTimeout(slow_time_out);
+                return;
+              }
+
+              //result.innerHTML = JSON.stringify(data, null, 4);
+              // console.log(data);
+              localStorage.setItem("sems", JSON.stringify(data));
+              localStorage.setItem("sems-mode", mode);
+              localStorage.setItem("canLoadUser", "true");
+              location.href = "user.html"
+              //console.log(calc_cgpa(data));
+            }
+          })
+
+          
         }).catch(e => {
           error_div.innerHTML = "SERVER ERROR !";
           error_div.style.opacity = "1";
