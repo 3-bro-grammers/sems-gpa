@@ -198,10 +198,10 @@
 
         for (let i = 0; i < gpas.length; i++) {
           let tmp = "";
-          if (isNaN(gpas[i].toFixed(3)))
+          if (isNaN(gpas[i].toFixed(2)))
             tmp = "Unavailable";
           else
-            tmp = gpas[i].toFixed(3);
+            tmp = gpas[i].toFixed(2);
           plot.push([i + 1, parseFloat(tmp), `${tmp} in Sem-${i + 1}`]);
         }
 
@@ -226,10 +226,10 @@
       }
       res_body.innerHTML = txt;
       var cur_gpa;
-      if (isNaN(gpas[i].toFixed(3)))
+      if (isNaN(gpas[i].toFixed(2)))
         cur_gpa = "Unavailable";
       else
-        cur_gpa = gpas[i].toFixed(3);
+        cur_gpa = gpas[i].toFixed(2);
       gpa_div.innerHTML = `GPA of Semester-${i + 1} is <b>${cur_gpa}<b>`;
       res_table.style.display = "flex";
 
@@ -246,7 +246,7 @@
       // plot = [];
       res_table.style.display = "none";
 
-      let cgpa = grades["cgpa"].toFixed(3);
+      let cgpa = grades["cgpa"].toFixed(2);
       gpa_div.innerHTML = `Overall CGPA is <b>${cgpa}<b>`;
       cgpa_table.style.display = "block";
       document.querySelectorAll("#sem_nav a").forEach((e, j, l) => {
