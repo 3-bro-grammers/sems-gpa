@@ -127,10 +127,14 @@
     }
     var temp_cookies;
     // to load captcha
-    fetch("https://dff0074f.eu-gb.apigw.appdomain.cloud/sems-fetch/",
+    fetch("https://sems-gpa.herokuapp.com/",
       {
         method: "post",
+        headers:{
+          "Content-type":"application/json"
+        },
         body: JSON.stringify({ captcha: null })
+
       }).then(res => res.json()).then((data) => {
         img_captcha.src = "data:image/jpeg;base64," + data.captcha;
         temp_cookies = data.cookies.join(" "); // data.cookies[0].substring(0, data.cookies[0].indexOf(";") + 1) + data.cookies[1].substring(0, data.cookies[1].indexOf(";") + 1);
@@ -171,9 +175,12 @@
 
 
       // to fetch results
-      fetch("https://dff0074f.eu-gb.apigw.appdomain.cloud/sems-fetch/",
+      fetch("https://sems-gpa.herokuapp.com/",
         {
           method: "post",
+          headers:{
+            "Content-type":"application/json"
+          },
           body: JSON.stringify({
             reg: reg_txt.value,
             pass: pass_txt.value,

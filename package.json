@@ -1,0 +1,27 @@
+{
+  "name": "sems_gpa",
+  "version": "1.0.0",
+  "description": ">## LIVE link : https://sems-gpa.web.app/",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node heroku"
+  },
+  "author": "Agilan",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.23.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "firebase-admin": "^10.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3-bro-grammers/sems-gpa.git"
+  },
+  "bugs": {
+    "url": "https://github.com/3-bro-grammers/sems-gpa/issues"
+  },
+  "homepage": "https://sems-gpa.web.app/"
+}
