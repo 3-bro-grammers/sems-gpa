@@ -70,3 +70,4 @@ lambda/func.js
 lambda/service_account.json
 unprocessed/
 dist/
+.vercel

@@ -27,10 +27,10 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 var db = admin.database();
 
-exports.handler = async (event) => {
+module.exports = async (req,res) => {
 
     var res_body = {}
-    var req_body = JSON.parse(event.body);
+    var req_body = JSON.parse(req.body);
 
     if (!req_body.captcha) {
 
@@ -151,7 +151,7 @@ exports.handler = async (event) => {
                         await db.ref(`visits/${Date.now()}`).set(`${reg}_${name}`);
                     }
 
-                    // console.log(i);
+                    console.log("Finish Sem : ", i);
                     resolve(sem_data);
                     // data.push(sem_data);
 
@@ -177,12 +177,6 @@ exports.handler = async (event) => {
 
     }
 
-    return {
-        headers: {
-            'Access-Control-Allow-Origin': '*'
-        },
-        statusCode: 200,
-        body: JSON.stringify(res_body),
-    }
-
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.status(200).send(JSON.stringify(res_body));
 }
