@@ -151,12 +151,13 @@
     }
     var temp_cookies;
     // to load captcha
-    fetch("https://sems-gpa.herokuapp.com/",
+    fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
       {
         method: "post",
+        /*
         headers:{
-          "Content-type":"application/json"
-        },
+          "Content-Type":"application/json"
+        },*/
         body: JSON.stringify({ captcha: null })
 
       }).then(res => res.json()).then((data) => {
@@ -199,12 +200,12 @@
 
 
       // to fetch results
-      fetch("https://sems-gpa.herokuapp.com/",
+      fetch("https://tv58io4a49.execute-api.us-east-2.amazonaws.com/default/sems-gpa",
         {
           method: "post",
-          headers:{
+          /*headers:{
             "Content-type":"application/json"
-          },
+          },*/
           body: JSON.stringify({
             reg: reg_txt.value,
             pass: pass_txt.value,
@@ -214,9 +215,9 @@
         }).then(res => res.json()).then(data => {
 
 
-          db.ref(`cur_resp/${data.db_push_key}`).on('value', (snap)=>{
 
-            var data = snap.val();
+
+
             if(data){
               fetch_loader.style.display = "none";              
 
@@ -236,7 +237,7 @@
               location.href = "user.html"
               //console.log(calc_cgpa(data));
             }
-          })
+
 
           
         }).catch(e => {
