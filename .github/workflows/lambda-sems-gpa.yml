@@ -36,7 +36,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: us-east-2
+          AWS_DEFAULT_REGION: ap-south-1
       
       # - name: default deploy
       #   uses: appleboy/lambda-action@master
@@ -47,3 +47,4 @@ jobs:
       #     function_name: sems-gpa
       #     zip_file: ./lambda/bundle.zip
       #     timeout: 60
+      
